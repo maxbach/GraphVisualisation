@@ -30,7 +30,7 @@ public class GraphAndAlgoFrame extends JFrame {
     private JLabel getImage() {
         JLabel label = new JLabel("Не загрузилось. Вы остались без мемаса.");
         try {
-            BufferedImage img = ImageIO.read(new File("res/wt7e1p.jpg"));
+            BufferedImage img = ImageIO.read(new File("wt7e1p.jpg"));
             ImageIcon icon = new ImageIcon(img);
             label = new JLabel(icon);
 

@@ -18,7 +18,7 @@ public class VisualizationFrame extends JFrame {
         JPanel panel = new JPanel();
 
         try {
-            BufferedImage img = ImageIO.read(new File("res/wt7e1p.jpg"));
+            BufferedImage img = ImageIO.read(new File("wt7e1p.jpg"));
             ImageIcon icon = new ImageIcon(img);
             JLabel label = new JLabel(icon);
             panel.add(label);
