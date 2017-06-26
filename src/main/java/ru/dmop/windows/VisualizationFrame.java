@@ -16,7 +16,7 @@ public class VisualizationFrame extends JFrame {
         JPanel panel = new JPanel();
 
         panel.add(GraphBuilder.getGraph());
-
+        panel.add(new JButton("Next"));
         setContentPane(panel);
         pack();
         setVisible(true);
