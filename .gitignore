@@ -26,3 +26,4 @@ hs_err_pid*
 *.iml
 *.idea/workspace.xml
 *.idea/tasks.xml
+/out
