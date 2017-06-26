@@ -8,13 +8,13 @@ import java.io.File;
 import java.io.IOException;
 
 /**
- // Экран, на котором будет визуализация алгоритма
+ * // Экран, на котором будет визуализация алгоритма
  */
 public class VisualizationFrame extends JFrame {
     public VisualizationFrame() throws HeadlessException {
 
         super("Тут будет визуализация алгоритма");
-        setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
+        setDefaultCloseOperation(WindowConstants.DISPOSE_ON_CLOSE);
         JPanel panel = new JPanel();
 
         try {

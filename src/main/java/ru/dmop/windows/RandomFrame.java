@@ -8,7 +8,7 @@ import java.awt.event.MouseEvent;
 import java.text.NumberFormat;
 
 /**
- Экран, на котором будут вводится параметры для рандомного создания графа
+ * Экран, на котором будут вводится параметры для рандомного создания графа
  */
 
 public class RandomFrame extends JFrame {

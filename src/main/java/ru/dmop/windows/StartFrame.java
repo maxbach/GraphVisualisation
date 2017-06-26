@@ -5,10 +5,10 @@ import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 
 /**
- Стартовый экран
+ * Стартовый экран
  */
 public class StartFrame extends JFrame {
-    public StartFrame(){
+    public StartFrame() {
         super("Поиск кратчайших путей в графе");
         Box box = Box.createVerticalBox();
         box.add(Box.createVerticalStrut(20));
