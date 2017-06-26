@@ -1,13 +1,11 @@
 package ru.dmop.windows;
 
-import javax.imageio.ImageIO;
+import ru.dmop.graph.GraphBuilder;
+
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
-import java.awt.image.BufferedImage;
-import java.io.File;
-import java.io.IOException;
 
 /**
  * Экран, на котором будет картинка графа и пользователю будет предоставлен выбор алгоритма и вершины
@@ -18,26 +16,13 @@ public class GraphAndAlgoFrame extends JFrame {
         super("Выбор вершины и алгоритма");
         setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
         Box mainBox = Box.createHorizontalBox();
-        mainBox.add(getImage());
+        mainBox.add(GraphBuilder.getGraph());
         mainBox.add(Box.createHorizontalStrut(10));
         mainBox.add(getButtons());
         setContentPane(mainBox);
         pack();
         setVisible(true);
 
-    }
-
-    private JLabel getImage() {
-        JLabel label = new JLabel("Не загрузилось. Вы остались без мемаса.");
-        try {
-            BufferedImage img = ImageIO.read(new File("wt7e1p.jpg"));
-            ImageIcon icon = new ImageIcon(img);
-            label = new JLabel(icon);
-
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-        return label;
     }
 
     private Box getButtons() {

@@ -1,11 +1,9 @@
 package ru.dmop.windows;
 
-import javax.imageio.ImageIO;
+import ru.dmop.graph.GraphBuilder;
+
 import javax.swing.*;
 import java.awt.*;
-import java.awt.image.BufferedImage;
-import java.io.File;
-import java.io.IOException;
 
 /**
  * // Экран, на котором будет визуализация алгоритма
@@ -17,15 +15,7 @@ public class VisualizationFrame extends JFrame {
         setDefaultCloseOperation(WindowConstants.DISPOSE_ON_CLOSE);
         JPanel panel = new JPanel();
 
-        try {
-            BufferedImage img = ImageIO.read(new File("wt7e1p.jpg"));
-            ImageIcon icon = new ImageIcon(img);
-            JLabel label = new JLabel(icon);
-            panel.add(label);
-
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
+        panel.add(GraphBuilder.getGraph());
 
         setContentPane(panel);
         pack();
