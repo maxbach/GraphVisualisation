@@ -1,5 +1,7 @@
 package ru.dmop.windows;
 
+import ru.dmop.graph.GraphBuilder;
+
 import javax.swing.*;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
@@ -38,7 +40,7 @@ public class StartFrame extends JFrame {
                 if (ret == JFileChooser.APPROVE_OPTION) {
                     File file = fileopen.getSelectedFile();
                     setVisible(false);
-                    new GraphAndAlgoFrame();
+                    new GraphAndAlgoFrame(GraphBuilder.getGraph());
                 }
             }
         });
@@ -46,7 +48,7 @@ public class StartFrame extends JFrame {
         box.add(Box.createVerticalStrut(20));
 
         setContentPane(box);
-        setDefaultCloseOperation(EXIT_ON_CLOSE);
+        setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
         pack();
         setVisible(true);
     }

@@ -1,5 +1,7 @@
 package ru.dmop.windows;
 
+import com.mxgraph.swing.mxGraphComponent;
+import com.mxgraph.view.mxGraph;
 import ru.dmop.graph.GraphBuilder;
 
 import javax.swing.*;
@@ -12,16 +14,24 @@ import java.awt.event.MouseEvent;
  */
 
 public class GraphAndAlgoFrame extends JFrame {
-    public GraphAndAlgoFrame() throws HeadlessException {
+    mxGraphComponent graphComponent;
+
+    public GraphAndAlgoFrame(mxGraph graph) throws HeadlessException {
         super("Выбор вершины и алгоритма");
         setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
         Box mainBox = Box.createHorizontalBox();
-        mainBox.add(GraphBuilder.getGraph());
+        graphComponent = new mxGraphComponent(graph);
+        mainBox.add(graphComponent);
         mainBox.add(Box.createHorizontalStrut(10));
         mainBox.add(getButtons());
         setContentPane(mainBox);
         pack();
         setVisible(true);
+
+    }
+
+    public GraphAndAlgoFrame(int numberOfNodes, int density) {
+        this(GraphBuilder.getRandomGraph(numberOfNodes, density));
 
     }
 
@@ -43,7 +53,7 @@ public class GraphAndAlgoFrame extends JFrame {
             @Override
             public void mouseClicked(MouseEvent e) {
                 // открываем новое окно
-                new VisualizationFrame();
+                new VisualizationFrame(graphComponent.getGraph());
             }
         });
         return button;
@@ -56,7 +66,7 @@ public class GraphAndAlgoFrame extends JFrame {
             @Override
             public void mouseClicked(MouseEvent e) {
                 // открываем новое окно
-                new VisualizationFrame();
+                new VisualizationFrame(graphComponent.getGraph());
             }
         });
         return button;

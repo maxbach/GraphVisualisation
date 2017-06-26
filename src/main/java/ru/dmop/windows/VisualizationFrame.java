@@ -1,6 +1,7 @@
 package ru.dmop.windows;
 
-import ru.dmop.graph.GraphBuilder;
+import com.mxgraph.swing.mxGraphComponent;
+import com.mxgraph.view.mxGraph;
 
 import javax.swing.*;
 import java.awt.*;
@@ -9,13 +10,13 @@ import java.awt.*;
  * // Экран, на котором будет визуализация алгоритма
  */
 public class VisualizationFrame extends JFrame {
-    public VisualizationFrame() throws HeadlessException {
+    public VisualizationFrame(mxGraph graph) throws HeadlessException {
 
         super("Тут будет визуализация алгоритма");
         setDefaultCloseOperation(WindowConstants.DISPOSE_ON_CLOSE);
         JPanel panel = new JPanel();
 
-        panel.add(GraphBuilder.getGraph());
+        panel.add(new mxGraphComponent(graph));
         panel.add(new JButton("Next"));
         setContentPane(panel);
         pack();

@@ -12,6 +12,8 @@ import java.text.NumberFormat;
  */
 
 public class RandomFrame extends JFrame {
+    JTextField field;
+    JSlider slider;
 
     public RandomFrame() throws HeadlessException {
         super("Построить рандомное дерево");
@@ -38,14 +40,14 @@ public class RandomFrame extends JFrame {
         NumberFormat format = NumberFormat.getInstance();
         NumberFormatter formatter = new NumberFormatter(format);
         formatter.setValueClass(Integer.class);
-        formatter.setMinimum(0);
+        formatter.setMinimum(1);
         formatter.setMaximum(Integer.MAX_VALUE);
         formatter.setAllowsInvalid(false);
         formatter.setCommitsOnValidEdit(true);
-        JTextField numberField = new JFormattedTextField(formatter);
+        field = new JFormattedTextField(formatter);
 
 
-        box.add(numberField);
+        box.add(field);
         return box;
     }
 
@@ -55,7 +57,7 @@ public class RandomFrame extends JFrame {
         box.add(Box.createHorizontalStrut(10));
 
         // настраиваем слайды
-        JSlider slider = new JSlider(JSlider.HORIZONTAL, 0, 100, 50);
+        slider = new JSlider(JSlider.HORIZONTAL, 0, 100, 50);
         slider.setMajorTickSpacing(20);
         slider.setMinorTickSpacing(5);
         slider.setPaintTicks(true);
@@ -75,8 +77,12 @@ public class RandomFrame extends JFrame {
             @Override
             public void mouseClicked(MouseEvent e) {
                 // открываем новое окно
-                setVisible(false);
-                new GraphAndAlgoFrame();
+                String textOfField = field.getText();
+                if (textOfField != null) {
+                    setVisible(false);
+                    new GraphAndAlgoFrame(Integer.parseInt(textOfField), slider.getValue());
+                }
+
             }
         });
         return button;
