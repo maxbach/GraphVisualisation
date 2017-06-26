@@ -1,10 +1,13 @@
 package ru.dmop;
 
-import ru.dmop.windows.RandomFrame;
+import ru.dmop.windows.StartFrame;
+
+import javax.swing.*;
 
 public class Main {
 
     public static void main(String[] args) {
-        new RandomFrame();
+        JFrame startWindow = new StartFrame();
+        startWindow.setVisible(true);
     }
 }
