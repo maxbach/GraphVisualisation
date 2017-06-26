@@ -3,6 +3,7 @@ package ru.dmop.windows;
 import javax.swing.*;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
+import java.io.File;
 
 /**
  * Стартовый экран
@@ -27,14 +28,18 @@ public class StartFrame extends JFrame {
         box.add(Box.createVerticalStrut(10));
         box.add(Box.createVerticalGlue());
 
-        JButton exit = new JButton("Exit");
+        JButton exit = new JButton("GraphFromFile");
         exit.setAlignmentX(JComponent.CENTER_ALIGNMENT);
         exit.addMouseListener(new MouseAdapter() {
             @Override
             public void mouseClicked(MouseEvent e) {
-                setVisible(false);
-                dispose();
-                System.exit(0);
+                JFileChooser fileopen = new JFileChooser();
+                int ret = fileopen.showDialog(null, "Открыть файл");
+                if (ret == JFileChooser.APPROVE_OPTION) {
+                    File file = fileopen.getSelectedFile();
+                    setVisible(false);
+                    new GraphAndAlgoFrame();
+                }
             }
         });
         box.add(exit);
