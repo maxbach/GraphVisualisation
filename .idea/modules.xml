@@ -3,7 +3,6 @@
   <component name="ProjectModuleManager">
     <modules>
       <module fileurl="file://$PROJECT_DIR$/ShortestWayFinder.iml" filepath="$PROJECT_DIR$/ShortestWayFinder.iml" />
-      <module fileurl="file://C:\Users\vend\Documents\GitHub\GraphVisualisationOrigin\ShortestWayFinder.iml" filepath="C:\Users\vend\Documents\GitHub\GraphVisualisationOrigin\ShortestWayFinder.iml" />
     </modules>
   </component>
 </project>
