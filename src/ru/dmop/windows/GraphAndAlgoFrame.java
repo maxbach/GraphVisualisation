@@ -58,7 +58,6 @@ public class GraphAndAlgoFrame extends JFrame {
             @Override
             public void mouseClicked(MouseEvent e) {
                 // открываем новое окно
-                setVisible(false);
                 new VisualizationFrame();
             }
         });
@@ -72,7 +71,6 @@ public class GraphAndAlgoFrame extends JFrame {
             @Override
             public void mouseClicked(MouseEvent e) {
                 // открываем новое окно
-                setVisible(false);
                 new VisualizationFrame();
             }
         });
