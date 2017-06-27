@@ -20,7 +20,7 @@ public class Graph extends mxGraph {
         return obj;
     }
 
-    public Object insertEdge(Object parent, int pointA, int pointB, Object value) {
+    public Object insertEdge(Object parent, int pointA, int pointB, Integer value) {
         String ind = "edge" + pointA + "_" + pointB;
         Object obj = super.insertEdge(parent, ind, value, getVertex(pointA), getVertex(pointB));
         nodesAndEdges.put(ind, obj);
@@ -33,6 +33,16 @@ public class Graph extends mxGraph {
 
     public Object getEdge(int pointA, int pointB) {
         return nodesAndEdges.get("edge" + pointA + "_" + pointB);
+    }
+
+    public Integer getWeightOfEdge(int pointA, int pointB) {
+        Object edge = getEdge(pointA, pointB);
+        Object weight = this.getModel().getValue(edge);
+        if (weight instanceof Integer) {
+            return (Integer) weight;
+        } else {
+            return null;
+        }
     }
 
 
