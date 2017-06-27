@@ -2,6 +2,7 @@ package ru.dmop.graph;
 
 import com.mxgraph.view.mxGraph;
 
+import java.util.ArrayList;
 import java.util.HashMap;
 
 
@@ -43,6 +44,22 @@ public class Graph extends mxGraph {
         } else {
             return null;
         }
+    }
+
+    public Integer getSize() {
+        return this.getModel().getChildCount(getDefaultParent());
+    }
+
+    public ArrayList<Integer> getRelatedNodes(int node) {
+        ArrayList<Integer> relatedNodes = new ArrayList<Integer>();
+
+        for (int i = 0; i < getSize(); i++) {
+            if (getEdge(node, i) != null) {
+                relatedNodes.add(i);
+            }
+        }
+
+        return relatedNodes;
     }
 
 
