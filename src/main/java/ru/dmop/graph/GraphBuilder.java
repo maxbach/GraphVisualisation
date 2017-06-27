@@ -6,9 +6,7 @@ import com.mxgraph.view.mxStylesheet;
 
 import java.util.Hashtable;
 
-import static ru.dmop.graph.StyleConstants.DEFAULT_STYLE;
-import static ru.dmop.graph.StyleConstants.GREEN_STYLE;
-import static ru.dmop.graph.StyleConstants.RED_STYLE;
+import static ru.dmop.graph.StyleConstants.*;
 
 
 public class GraphBuilder {
@@ -74,7 +72,7 @@ public class GraphBuilder {
                             bools[p] = true;
                             int first = p / numberOfNodes;
                             int second = p % numberOfNodes;
-                            int weight = (int) ((Math.random()) * 10);
+                            int weight = (int) ((Math.random()) * 10) + 1;
                             graph.insertEdge(parent, first, second, weight);
                             break;
                         }
@@ -95,7 +93,7 @@ public class GraphBuilder {
                     if (!bools[i]) {
                         int first = i / numberOfNodes;
                         int second = i % numberOfNodes;
-                        int weight = (int) ((Math.random()) * 10);
+                        int weight = (int) ((Math.random()) * 10) + 1;
                         graph.insertEdge(parent, first, second, weight);
                     }
                 }

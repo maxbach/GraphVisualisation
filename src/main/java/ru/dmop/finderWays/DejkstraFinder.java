@@ -70,7 +70,7 @@ public class DejkstraFinder implements BaseFinder {
         Integer end = pointB;
         WayInGraph w = new WayInGraph(ways[pointB]);
         while (end != pointA) {
-            w.addNewNode(end);
+            w.addToTheEnd(end);
             end = prev[end];
         }
         w.addNewNode(pointA);

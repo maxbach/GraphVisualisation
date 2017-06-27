@@ -26,4 +26,8 @@ public class WayInGraph {
     public boolean isOk() {
         return !way.isEmpty();
     }
+
+    public void addToTheEnd(int point) {
+        way.add(0, point);
+    }
 }

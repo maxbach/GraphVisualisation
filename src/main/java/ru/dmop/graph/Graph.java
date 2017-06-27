@@ -12,8 +12,8 @@ import static ru.dmop.graph.StyleConstants.DEFAULT_STYLE;
 
 public class Graph extends mxGraph {
     private HashMap<String, Object> nodesAndEdges;
-    private Integer numberOfNodes;
-    private Integer numberOfEdges;
+    private Integer numberOfNodes = 0;
+    private Integer numberOfEdges = 0;
 
     public Graph() {
         super();
