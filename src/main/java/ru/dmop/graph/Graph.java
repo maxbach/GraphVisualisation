@@ -1,9 +1,12 @@
 package ru.dmop.graph;
 
 import com.mxgraph.view.mxGraph;
+import ru.dmop.finderWays.WayInGraph;
 
 import java.util.ArrayList;
 import java.util.HashMap;
+
+import static ru.dmop.graph.StyleConstants.DEFAULT_STYLE;
 
 
 public class Graph extends mxGraph {
@@ -16,7 +19,7 @@ public class Graph extends mxGraph {
 
     public Object insertVertex(Object parent, int id, Object value, double x, double y, double width, double height) {
         String ind = "node" + id;
-        Object obj = super.insertVertex(parent, ind, value, x, y, width, height);
+        Object obj = super.insertVertex(parent, ind, value, x, y, width, height, DEFAULT_STYLE);
         nodesAndEdges.put(ind, obj);
         return obj;
     }
@@ -60,6 +63,10 @@ public class Graph extends mxGraph {
         }
 
         return relatedNodes;
+    }
+
+    public void highLightThePath(WayInGraph way) {
+
     }
 
 

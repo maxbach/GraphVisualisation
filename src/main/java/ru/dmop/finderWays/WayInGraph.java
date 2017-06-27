@@ -22,4 +22,8 @@ public class WayInGraph {
     public void addNewNode(int point) {
         way.add(point);
     }
+
+    public boolean isOk() {
+        return !way.isEmpty();
+    }
 }
