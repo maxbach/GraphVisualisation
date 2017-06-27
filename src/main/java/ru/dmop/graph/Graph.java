@@ -1,5 +1,6 @@
 package ru.dmop.graph;
 
+import com.mxgraph.model.mxCell;
 import com.mxgraph.view.mxGraph;
 import ru.dmop.finderWays.WayInGraph;
 
@@ -59,6 +60,13 @@ public class Graph extends mxGraph {
 
     public Integer getNumberOfEdges() {
         return numberOfEdges;
+    }
+
+    public Integer getIdOfNode(Object object) {
+        mxCell cell = (mxCell) object;
+        String id = cell.getId();
+        id = id.substring(4);
+        return Integer.parseInt(id);
     }
 
     public ArrayList<Integer> getRelatedNodes(int node) {
