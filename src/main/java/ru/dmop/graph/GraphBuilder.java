@@ -1,22 +1,23 @@
 package ru.dmop.graph;
 
+import com.mxgraph.util.mxConstants;
 import com.mxgraph.view.mxGraph;
+import com.mxgraph.view.mxStylesheet;
 
-import javax.imageio.stream.FileImageInputStream;
-import java.io.*;
-import java.util.ArrayList;
+import java.util.Hashtable;
+
+import static ru.dmop.graph.StyleConstants.*;
 
 
-public class GraphBuilder implements Serializable {
+public class GraphBuilder {
 
+    private static final double width = 30, height = 30;
     private static double x;
     private static double y;
     private static double sin;
     private static double cos;
     private static double centerX;
     private static double centerY;
-    private static final double width = 30, height = 30;
-
 
     public static mxGraph getGraph() {
         mxGraph graph = new mxGraph();
@@ -40,6 +41,7 @@ public class GraphBuilder implements Serializable {
         countConsts(numberOfNodes);
         Graph graph = new Graph();
         Object parent = graph.getDefaultParent();
+        addStyles(graph);
 
         graph.getModel().beginUpdate();
         double realDensity = (double) density / (double) 100;
@@ -57,21 +59,20 @@ public class GraphBuilder implements Serializable {
                 y = tempY;
             }
 
-            ArrayList<Boolean> bools = new ArrayList<Boolean>();
+            Boolean[] bools = new Boolean[maxEdges];
             for (int i = 0; i < maxEdges; i++) {
-                bools.add(false);
+                bools[i] = false;
             }
 
             if (numberOfEdges * 2 <= maxEdges) {
                 for (int i = 0; i < numberOfEdges; i++) {
                     while (true) {
-                        int p = (int) Math.round(Math.random() * maxEdges) - 1;
-                        if (!bools.get(p)) {
-                            bools.remove(p);
-                            bools.add(p, true);
+                        int p = (int) Math.round(Math.random() * (maxEdges - 1));
+                        if (!bools[p]) {
+                            bools[p] = true;
                             int first = p / numberOfNodes;
                             int second = p % numberOfNodes;
-                            int weight = (int) ((Math.random()) * 10);
+                            int weight = (int) ((Math.random()) * 10) + 1;
                             graph.insertEdge(parent, first, second, weight);
                             break;
                         }
@@ -80,20 +81,19 @@ public class GraphBuilder implements Serializable {
             } else {
                 for (int i = 0; i < maxEdges - numberOfEdges; i++) {
                     while (true) {
-                        int p = (int) Math.round(Math.random() * maxEdges) - 1;
-                        if (!bools.get(p)) {
-                            bools.remove(p);
-                            bools.add(p, true);
+                        int p = (int) Math.round(Math.random() * (maxEdges - 1));
+                        if (!bools[p]) {
+                            bools[p] = true;
                             break;
                         }
                     }
                 }
 
                 for (int i = 0; i < maxEdges; i++) {
-                    if (!bools.get(i)) {
+                    if (!bools[i]) {
                         int first = i / numberOfNodes;
                         int second = i % numberOfNodes;
-                        int weight = (int) ((Math.random()) * 10);
+                        int weight = (int) ((Math.random()) * 10) + 1;
                         graph.insertEdge(parent, first, second, weight);
                     }
                 }
@@ -119,20 +119,27 @@ public class GraphBuilder implements Serializable {
 
     }
 
-    public static mxGraph getGraphFromFile (final InputStream stream) throws IOException {
-        Graph graph = null;
-        ObjectInputStream objectinputstream = null;
-        try {
-            objectinputstream = new ObjectInputStream(stream);
-            graph = (Graph) objectinputstream.readObject();
-        } catch (Exception e) {
-            e.printStackTrace();
-        } finally {
-            if(objectinputstream != null){
-                objectinputstream .close();
-            }
-        }
-        return graph;
+    private static void addStyles(Graph graph) {
+        Hashtable<String, Object> style;
+        mxStylesheet stylesheet = graph.getStylesheet();
+
+        // custom vertex style
+        style = new Hashtable<String, Object>();
+        style.put(mxConstants.STYLE_FILLCOLOR, "#388E3C");
+        style.put(mxConstants.STYLE_FONTCOLOR, "#ffffff");
+        stylesheet.putCellStyle(GREEN_STYLE, style);
+
+        style = new Hashtable<String, Object>();
+        style.put(mxConstants.STYLE_FILLCOLOR, "#D32F2F");
+        style.put(mxConstants.STYLE_FONTCOLOR, "#ffffff");
+        stylesheet.putCellStyle(RED_STYLE, style);
+
+        style = new Hashtable<String, Object>();
+        style.put(mxConstants.STYLE_FILLCOLOR, "#B3E5FC");
+        style.put(mxConstants.STYLE_FONTCOLOR, "#000000");
+        stylesheet.putCellStyle(DEFAULT_STYLE, style);
+
     }
+
 
 }

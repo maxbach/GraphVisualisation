@@ -1,33 +1,41 @@
 package ru.dmop.graph;
 
+import com.mxgraph.model.mxCell;
 import com.mxgraph.view.mxGraph;
+import ru.dmop.finderWays.WayInGraph;
 
-import javax.swing.*;
-import java.io.FileOutputStream;
-import java.io.ObjectOutputStream;
-import java.io.Serializable;
+import java.util.ArrayList;
 import java.util.HashMap;
 
+import static ru.dmop.graph.StyleConstants.DEFAULT_STYLE;
+import static ru.dmop.graph.StyleConstants.EDGE_STYLE;
 
-public class Graph extends mxGraph implements Serializable {
+
+public class Graph extends mxGraph {
     private HashMap<String, Object> nodesAndEdges;
+    private Integer numberOfNodes = 0;
+    private Integer numberOfEdges = 0;
 
     public Graph() {
         super();
         nodesAndEdges = new HashMap<String, Object>();
+        numberOfNodes = new Integer(0);
+        numberOfEdges = new Integer(0);
     }
 
     public Object insertVertex(Object parent, int id, Object value, double x, double y, double width, double height) {
         String ind = "node" + id;
-        Object obj = super.insertVertex(parent, ind, value, x, y, width, height);
+        Object obj = super.insertVertex(parent, ind, value, x, y, width, height, DEFAULT_STYLE);
         nodesAndEdges.put(ind, obj);
+        numberOfNodes++;
         return obj;
     }
 
-    public Object insertEdge(Object parent, int pointA, int pointB, Object value) {
+    public Object insertEdge(Object parent, int pointA, int pointB, Integer value) {
         String ind = "edge" + pointA + "_" + pointB;
         Object obj = super.insertEdge(parent, ind, value, getVertex(pointA), getVertex(pointB));
         nodesAndEdges.put(ind, obj);
+        numberOfEdges++;
         return obj;
     }
 
@@ -39,20 +47,55 @@ public class Graph extends mxGraph implements Serializable {
         return nodesAndEdges.get("edge" + pointA + "_" + pointB);
     }
 
-    public void writeGraph() {
+    public Integer getWeightOfEdge(int pointA, int pointB) {
+        Object edge = getEdge(pointA, pointB);
+        Object weight = this.getModel().getValue(edge);
+        if (weight instanceof Integer) {
+            return (Integer) weight;
+        } else {
+            return null;
+        }
+    }
 
-        JFileChooser fc = new JFileChooser();
-        if (fc.showSaveDialog(null) == JFileChooser.APPROVE_OPTION) {
-            try {
-                FileOutputStream fileStream = new FileOutputStream(fc.getSelectedFile());
-                ObjectOutputStream os = new ObjectOutputStream(fileStream);
-                os.writeObject(this);
-            }
-            catch (Exception e) {
-                System.out.println("Что-то пошло не так...");
+    public Integer getNumberOfNodes() {
+        return numberOfNodes;
+    }
+
+    public Integer getNumberOfEdges() {
+        return numberOfEdges;
+    }
+
+    public Integer getIdOfNode(Object object) {
+        mxCell cell = (mxCell) object;
+        String id = cell.getId();
+        id = id.substring(4);
+        return Integer.parseInt(id);
+    }
+
+    public ArrayList<Integer> getRelatedNodes(int node) {
+        ArrayList<Integer> relatedNodes = new ArrayList<Integer>();
+
+        for (int i = 0; i < getNumberOfNodes(); i++) {
+            if (getEdge(node, i) != null) {
+                relatedNodes.add(i);
             }
         }
 
+        return relatedNodes;
+    }
+
+    public void highLightThePath(WayInGraph way) {
+        int firstIndex = 0;
+        int secondIndex = 1;
+        Object help = null;
+        //this.getModel().setStyle(this.getEdge(0,1), EDGE_STYLE);
+        int size = way.getWay().size();
+        while (size != secondIndex){
+            help = this.getEdge(way.getWay().get(firstIndex), way.getWay().get(secondIndex));
+            this.getModel().setStyle(help, EDGE_STYLE);
+            ++firstIndex;
+            ++secondIndex;
+        }
     }
 
 

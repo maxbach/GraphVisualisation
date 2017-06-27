@@ -10,9 +10,9 @@ import java.awt.*;
  * // Экран, на котором будет визуализация алгоритма
  */
 public class VisualizationFrame extends JFrame {
-    public VisualizationFrame(mxGraph graph) throws HeadlessException {
+    public VisualizationFrame(mxGraph graph, String name) throws HeadlessException {
 
-        super("Тут будет визуализация алгоритма");
+        super(name);
         setDefaultCloseOperation(WindowConstants.DISPOSE_ON_CLOSE);
         JPanel panel = new JPanel();
 
