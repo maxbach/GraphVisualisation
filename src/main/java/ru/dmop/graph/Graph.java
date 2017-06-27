@@ -11,6 +11,8 @@ import static ru.dmop.graph.StyleConstants.DEFAULT_STYLE;
 
 public class Graph extends mxGraph {
     private HashMap<String, Object> nodesAndEdges;
+    private Integer numberOfNodes;
+    private Integer numberOfEdges;
 
     public Graph() {
         super();
@@ -21,6 +23,7 @@ public class Graph extends mxGraph {
         String ind = "node" + id;
         Object obj = super.insertVertex(parent, ind, value, x, y, width, height, DEFAULT_STYLE);
         nodesAndEdges.put(ind, obj);
+        numberOfNodes++;
         return obj;
     }
 
@@ -28,6 +31,7 @@ public class Graph extends mxGraph {
         String ind = "edge" + pointA + "_" + pointB;
         Object obj = super.insertEdge(parent, ind, value, getVertex(pointA), getVertex(pointB));
         nodesAndEdges.put(ind, obj);
+        numberOfEdges++;
         return obj;
     }
 
@@ -49,14 +53,18 @@ public class Graph extends mxGraph {
         }
     }
 
-    public Integer getSize() {
-        return this.getModel().getChildCount(getDefaultParent());
+    public Integer getNumberOfNodes() {
+        return numberOfNodes;
+    }
+
+    public Integer getNumberOfEdges() {
+        return numberOfEdges;
     }
 
     public ArrayList<Integer> getRelatedNodes(int node) {
         ArrayList<Integer> relatedNodes = new ArrayList<Integer>();
 
-        for (int i = 0; i < getSize(); i++) {
+        for (int i = 0; i < getNumberOfNodes(); i++) {
             if (getEdge(node, i) != null) {
                 relatedNodes.add(i);
             }

@@ -14,13 +14,13 @@ public class DejkstraFinder implements BaseFinder {
 
     public DejkstraFinder(Graph graph) {
         this.graph = graph;
-        isAlso = new Boolean[graph.getSize()];
-        prev = new Integer[graph.getSize()];
-        ways = new Integer[graph.getSize()];
+        isAlso = new Boolean[graph.getNumberOfNodes()];
+        prev = new Integer[graph.getNumberOfNodes()];
+        ways = new Integer[graph.getNumberOfNodes()];
     }
 
     public WayInGraph getShortestPath(int pointA, int pointB) {
-        for (int i = 0; i < graph.getSize(); ++i) {
+        for (int i = 0; i < graph.getNumberOfNodes(); ++i) {
             isAlso[i] = false;
             prev[i] = pointA;
             if (i == pointA) {
@@ -30,7 +30,7 @@ public class DejkstraFinder implements BaseFinder {
             }
         }
 
-        for (int j = 0; j < graph.getSize(); ++j) {
+        for (int j = 0; j < graph.getNumberOfNodes(); ++j) {
             Integer current = j == 0 ? pointA : findmin();
             ArrayList<Integer> relatedNodes = graph.getRelatedNodes(current);
             for (Integer node : relatedNodes) {
@@ -56,7 +56,7 @@ public class DejkstraFinder implements BaseFinder {
         int minWay = Integer.MAX_VALUE;
         Integer min = 0;
 
-        for (int i = 0; i < graph.getSize(); ++i) {
+        for (int i = 0; i < graph.getNumberOfNodes(); ++i) {
             if (ways[i] < minWay && !isAlso[i]) {
                 minWay = ways[i];
                 min = i;
