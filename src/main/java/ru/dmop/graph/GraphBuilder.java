@@ -2,10 +2,12 @@ package ru.dmop.graph;
 
 import com.mxgraph.view.mxGraph;
 
+import javax.imageio.stream.FileImageInputStream;
+import java.io.*;
 import java.util.ArrayList;
 
 
-public class GraphBuilder {
+public class GraphBuilder implements Serializable {
 
     private static double x;
     private static double y;
@@ -117,5 +119,20 @@ public class GraphBuilder {
 
     }
 
+    public static mxGraph getGraphFromFile (final InputStream stream) throws IOException {
+        Graph graph = null;
+        ObjectInputStream objectinputstream = null;
+        try {
+            objectinputstream = new ObjectInputStream(stream);
+            graph = (Graph) objectinputstream.readObject();
+        } catch (Exception e) {
+            e.printStackTrace();
+        } finally {
+            if(objectinputstream != null){
+                objectinputstream .close();
+            }
+        }
+        return graph;
+    }
 
 }

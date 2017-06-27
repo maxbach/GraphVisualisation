@@ -2,6 +2,7 @@ package ru.dmop.windows;
 
 import com.mxgraph.swing.mxGraphComponent;
 import com.mxgraph.view.mxGraph;
+import ru.dmop.graph.Graph;
 import ru.dmop.graph.GraphBuilder;
 
 import javax.swing.*;
@@ -32,7 +33,6 @@ public class GraphAndAlgoFrame extends JFrame {
 
     public GraphAndAlgoFrame(int numberOfNodes, int density) {
         this(GraphBuilder.getRandomGraph(numberOfNodes, density));
-
     }
 
     private Box getButtons() {
@@ -40,10 +40,10 @@ public class GraphAndAlgoFrame extends JFrame {
         box.add(getDejkstraButton());
         box.add(Box.createVerticalStrut(10));
         box.add(getFloydButton());
+        box.add(Box.createVerticalStrut(10));
+        box.add(getWriteGraph());
         box.setAlignmentY(JComponent.CENTER_ALIGNMENT);
         return box;
-
-
     }
 
     private JButton getDejkstraButton() {
@@ -62,11 +62,23 @@ public class GraphAndAlgoFrame extends JFrame {
     private JButton getFloydButton() {
         JButton button = new JButton("Алгоритм Флойда");
         button.addMouseListener(new MouseAdapter() {
-
             @Override
             public void mouseClicked(MouseEvent e) {
                 // открываем новое окно
                 new VisualizationFrame(graphComponent.getGraph());
+            }
+        });
+        return button;
+    }
+
+    private JButton getWriteGraph() {
+        JButton button = new JButton("Записать граф в файл");
+        button.addMouseListener(new MouseAdapter() {
+            @Override
+            public void mouseClicked(MouseEvent e) {
+                // открываем новое окно
+                Graph graphForWrite = (Graph) graphComponent.getGraph();
+                graphForWrite.writeGraph();
             }
         });
         return button;

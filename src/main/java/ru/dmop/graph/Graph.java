@@ -2,10 +2,14 @@ package ru.dmop.graph;
 
 import com.mxgraph.view.mxGraph;
 
+import javax.swing.*;
+import java.io.FileOutputStream;
+import java.io.ObjectOutputStream;
+import java.io.Serializable;
 import java.util.HashMap;
 
 
-public class Graph extends mxGraph {
+public class Graph extends mxGraph implements Serializable {
     private HashMap<String, Object> nodesAndEdges;
 
     public Graph() {
@@ -33,6 +37,22 @@ public class Graph extends mxGraph {
 
     public Object getEdge(int pointA, int pointB) {
         return nodesAndEdges.get("edge" + pointA + "_" + pointB);
+    }
+
+    public void writeGraph() {
+
+        JFileChooser fc = new JFileChooser();
+        if (fc.showSaveDialog(null) == JFileChooser.APPROVE_OPTION) {
+            try {
+                FileOutputStream fileStream = new FileOutputStream(fc.getSelectedFile());
+                ObjectOutputStream os = new ObjectOutputStream(fileStream);
+                os.writeObject(this);
+            }
+            catch (Exception e) {
+                System.out.println("Что-то пошло не так...");
+            }
+        }
+
     }
 
 
