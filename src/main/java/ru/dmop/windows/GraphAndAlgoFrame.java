@@ -3,6 +3,7 @@ package ru.dmop.windows;
 import com.mxgraph.swing.mxGraphComponent;
 import com.mxgraph.view.mxGraph;
 import ru.dmop.finderWays.DejkstraFinder;
+import ru.dmop.finderWays.FloydFinder;
 import ru.dmop.finderWays.WayInGraph;
 import ru.dmop.graph.Graph;
 import ru.dmop.graph.GraphBuilder;
@@ -43,7 +44,8 @@ public class GraphAndAlgoFrame extends JFrame {
 
                         node1 = obj;
                         setGreen(obj);
-
+                        Graph help = (Graph) graph;
+                       //graph.getModel().setStyle(help.getEdge(0,1), EDGE_STYLE);
                     } else if (node2 == null) {
 
                         node2 = obj;
@@ -82,8 +84,6 @@ public class GraphAndAlgoFrame extends JFrame {
         box.add(getFloydButton());
         box.setAlignmentY(JComponent.CENTER_ALIGNMENT);
         return box;
-
-
     }
 
     private JButton getDejkstraButton() {
@@ -127,7 +127,10 @@ public class GraphAndAlgoFrame extends JFrame {
             @Override
             public void mouseClicked(MouseEvent e) {
                 // открываем новое окно
-                new VisualizationFrame(graphComponent.getGraph(), "Алгоритм Флойда");
+                Graph graph = (Graph) graphComponent.getGraph();
+                FloydFinder finder = new FloydFinder(graph);
+                    new VisualizationFrame(graphComponent.getGraph(), "Алгоритм Флойда");
+
             }
         });
         return button;

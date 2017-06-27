@@ -73,7 +73,7 @@ public class DejkstraFinder implements BaseFinder {
             w.addToTheEnd(end);
             end = prev[end];
         }
-        w.addNewNode(pointA);
+        w.addToTheEnd(pointA);
         return w;
 
     }
