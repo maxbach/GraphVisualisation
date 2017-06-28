@@ -1,6 +1,12 @@
 package ru.dmop.graph;
 
+import com.mxgraph.util.mxConstants;
 import com.mxgraph.view.mxGraph;
+import com.mxgraph.view.mxStylesheet;
+
+import java.util.Hashtable;
+
+import static ru.dmop.graph.StyleConstants.*;
 
 public class GraphBuilder {
 

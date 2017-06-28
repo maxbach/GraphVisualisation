@@ -102,8 +102,7 @@ public class GraphAndAlgoFrame extends JFrame {
                     int id2 = graph.getIdOfNode(obj2);
                     WayInGraph way = finder.getShortestPath(id1, id2);
                     if (way != null && way.isOk()) {
-                        graph.highLightThePath(way);
-                        new VisualizationFrame(graph, way, name);
+                        new VisualizationFrame(helpGraph, way, name);
                     } else {
                         JOptionPane.showMessageDialog(GraphAndAlgoFrame.this,
                                 "Нет пути между двумя вершинами",
