@@ -1,14 +1,16 @@
 package ru.dmop.graph;
 
 import com.mxgraph.model.mxCell;
+import com.mxgraph.util.mxConstants;
 import com.mxgraph.view.mxGraph;
+import com.mxgraph.view.mxStylesheet;
 import ru.dmop.finderWays.WayInGraph;
 
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.Hashtable;
 
-import static ru.dmop.graph.StyleConstants.DEFAULT_STYLE;
-import static ru.dmop.graph.StyleConstants.EDGE_STYLE;
+import static ru.dmop.graph.StyleConstants.*;
 
 
 public class Graph extends mxGraph {
@@ -114,5 +116,31 @@ public class Graph extends mxGraph {
         }
     }
 
+    public void addStyles() {
+        Hashtable<String, Object> style;
+        mxStylesheet stylesheet = this.getStylesheet();
+
+        // custom vertex style
+        style = new Hashtable<String, Object>();
+        style.put(mxConstants.STYLE_FILLCOLOR, "#388E3C");
+        style.put(mxConstants.STYLE_FONTCOLOR, "#ffffff");
+        stylesheet.putCellStyle(GREEN_STYLE, style);
+
+        style = new Hashtable<String, Object>();
+        style.put(mxConstants.STYLE_FILLCOLOR, "#D32F2F");
+        style.put(mxConstants.STYLE_FONTCOLOR, "#ffffff");
+        stylesheet.putCellStyle(RED_STYLE, style);
+
+        style = new Hashtable<String, Object>();
+        style.put(mxConstants.STYLE_FILLCOLOR, "#B3E5FC");
+        style.put(mxConstants.STYLE_FONTCOLOR, "#000000");
+        stylesheet.putCellStyle(DEFAULT_STYLE, style);
+
+        style = new Hashtable<String, Object>();
+        style.put(mxConstants.STYLE_STROKEWIDTH, 5);
+        style.put(mxConstants.STYLE_STROKECOLOR, "#D32F2F");
+        stylesheet.putCellStyle(EDGE_STYLE, style);
+
+    }
 
 }

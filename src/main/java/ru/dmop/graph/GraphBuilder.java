@@ -3,6 +3,7 @@ package ru.dmop.graph;
 import com.mxgraph.util.mxConstants;
 import com.mxgraph.view.mxGraph;
 import com.mxgraph.view.mxStylesheet;
+import ru.dmop.graph.Graph;
 
 import java.util.Hashtable;
 
@@ -41,7 +42,7 @@ public class GraphBuilder {
         countConsts(numberOfNodes);
         Graph graph = new Graph();
         Object parent = graph.getDefaultParent();
-        addStyles(graph);
+        graph.addStyles();
 
         graph.getModel().beginUpdate();
         double realDensity = (double) density / (double) 100;
@@ -130,37 +131,11 @@ public class GraphBuilder {
             graph.setNumberOfNodes(other.getNumberOfNodes());
             graph.setNumberOfEdges(other.getNumberOfEdges());
             graph.setNodesAndEdges(other.getNodesAndEdges());
+            graph.addStyles();
         } finally {
             graph.getModel().endUpdate();
         }
         return graph;
-    }
-
-    private static void addStyles(Graph graph) {
-        Hashtable<String, Object> style;
-        mxStylesheet stylesheet = graph.getStylesheet();
-
-        // custom vertex style
-        style = new Hashtable<String, Object>();
-        style.put(mxConstants.STYLE_FILLCOLOR, "#388E3C");
-        style.put(mxConstants.STYLE_FONTCOLOR, "#ffffff");
-        stylesheet.putCellStyle(GREEN_STYLE, style);
-
-        style = new Hashtable<String, Object>();
-        style.put(mxConstants.STYLE_FILLCOLOR, "#D32F2F");
-        style.put(mxConstants.STYLE_FONTCOLOR, "#ffffff");
-        stylesheet.putCellStyle(RED_STYLE, style);
-
-        style = new Hashtable<String, Object>();
-        style.put(mxConstants.STYLE_FILLCOLOR, "#B3E5FC");
-        style.put(mxConstants.STYLE_FONTCOLOR, "#000000");
-        stylesheet.putCellStyle(DEFAULT_STYLE, style);
-
-        style = new Hashtable<String, Object>();
-        style.put(mxConstants.STYLE_STROKEWIDTH, 5);
-        style.put(mxConstants.STYLE_STROKECOLOR, "#D32F2F");
-        stylesheet.putCellStyle(EDGE_STYLE, style);
-
     }
 
 
