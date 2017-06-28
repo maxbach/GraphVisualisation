@@ -11,6 +11,12 @@ public class WayInGraph {
         way = new ArrayList<Integer>();
     }
 
+     public WayInGraph(Integer wayLength, ArrayList<Integer> way){
+    	   this.wayLength = wayLength;
+    	   this.way = way;
+     }
+
+
     public ArrayList<Integer> getWay() {
         return way;
     }

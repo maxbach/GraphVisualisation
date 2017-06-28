@@ -44,8 +44,6 @@ public class GraphAndAlgoFrame extends JFrame {
 
                         node1 = obj;
                         setGreen(obj);
-                        Graph help = (Graph) graph;
-                       //graph.getModel().setStyle(help.getEdge(0,1), EDGE_STYLE);
                     } else if (node2 == null) {
 
                         node2 = obj;
@@ -74,7 +72,6 @@ public class GraphAndAlgoFrame extends JFrame {
 
     public GraphAndAlgoFrame(int numberOfNodes, int density) {
         this(GraphBuilder.getRandomGraph(numberOfNodes, density));
-
     }
 
     private Box getButtons() {
@@ -82,6 +79,7 @@ public class GraphAndAlgoFrame extends JFrame {
         box.add(getDejkstraButton());
         box.add(Box.createVerticalStrut(10));
         box.add(getFloydButton());
+        box.add(Box.createVerticalStrut(10));
         box.setAlignmentY(JComponent.CENTER_ALIGNMENT);
         return box;
     }
@@ -114,7 +112,6 @@ public class GraphAndAlgoFrame extends JFrame {
 
                 }
 
-
             }
         });
         return button;
@@ -126,11 +123,27 @@ public class GraphAndAlgoFrame extends JFrame {
 
             @Override
             public void mouseClicked(MouseEvent e) {
-                // открываем новое окно
-                Graph graph = (Graph) graphComponent.getGraph();
-                FloydFinder finder = new FloydFinder(graph);
-                    new VisualizationFrame(graphComponent.getGraph(), "Алгоритм Флойда");
+                Object obj1 = GraphAndAlgoFrame.this.node1;
+                Object obj2 = GraphAndAlgoFrame.this.node2;
 
+                if (obj1 != null && obj2 != null) {
+
+                    Graph graph = (Graph) graphComponent.getGraph();
+                    FloydFinder finder = new FloydFinder(graph);
+                    int id1 = graph.getIdOfNode(obj1);
+                    int id2 = graph.getIdOfNode(obj2);
+                    WayInGraph way = finder.getShortestPath(id1, id2);
+                    if (way.isOk()) {
+                        graph.highLightThePath(way);
+                        new VisualizationFrame(graph, "Алгоритм Флойда");
+                    } else {
+                        JOptionPane.showMessageDialog(GraphAndAlgoFrame.this,
+                                "Нет пути между двумя вершинами",
+                                "Find way error",
+                                JOptionPane.ERROR_MESSAGE);
+                    }
+
+                }
             }
         });
         return button;
@@ -147,5 +160,6 @@ public class GraphAndAlgoFrame extends JFrame {
 
     private void setDefault(Object obj) {
         graphComponent.getGraph().getModel().setStyle(obj, DEFAULT_STYLE);
+
     }
 }
