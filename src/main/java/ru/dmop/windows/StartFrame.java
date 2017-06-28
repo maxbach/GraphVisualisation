@@ -1,11 +1,11 @@
 package ru.dmop.windows;
 
+import ru.dmop.graph.GraphBuilder;
+
 import javax.swing.*;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
-import java.io.FileInputStream;
-import java.io.FileNotFoundException;
-import java.io.InputStream;
+import java.io.*;
 
 /**
  * Стартовый экран

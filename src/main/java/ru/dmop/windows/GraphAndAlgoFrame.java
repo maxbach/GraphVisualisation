@@ -31,7 +31,6 @@ public class GraphAndAlgoFrame extends JFrame {
         graphComponent = new mxGraphComponent(graph);
         mainBox.add(graphComponent);
         graphComponent.setEnabled(false);
-
         graphComponent.getGraphControl().addMouseListener(new MouseAdapter() {
 
             @Override
@@ -55,6 +54,7 @@ public class GraphAndAlgoFrame extends JFrame {
 
     public GraphAndAlgoFrame(int numberOfNodes, int density) {
         this(GraphBuilder.getRandomGraph(numberOfNodes, density));
+
     }
 
     private Box getButtons() {
@@ -90,14 +90,14 @@ public class GraphAndAlgoFrame extends JFrame {
 
             @Override
             public void mouseClicked(MouseEvent e) {
-
                 Object obj1 = GraphAndAlgoFrame.this.node1;
                 Object obj2 = GraphAndAlgoFrame.this.node2;
 
                 if (obj1 != null && obj2 != null) {
 
                     Graph graph = (Graph) graphComponent.getGraph();
-                    finder.setGraph(graph);
+                    Graph helpGraph = new Graph(graph);
+                    finder.setGraph(helpGraph);
                     int id1 = graph.getIdOfNode(obj1);
                     int id2 = graph.getIdOfNode(obj2);
                     WayInGraph way = finder.getShortestPath(id1, id2);
@@ -113,6 +113,7 @@ public class GraphAndAlgoFrame extends JFrame {
                     clear();
 
                 }
+
 
             }
         });

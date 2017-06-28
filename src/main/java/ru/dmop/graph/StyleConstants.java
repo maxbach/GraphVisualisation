@@ -5,4 +5,5 @@ public class StyleConstants {
     public static final String GREEN_STYLE = "Green";
     public static final String DEFAULT_STYLE = "Default";
     public static final String EDGE_STYLE = "Edge";
+    public static final String EDGE_DEFAULT_STYLE = "Edge_Default";
 }

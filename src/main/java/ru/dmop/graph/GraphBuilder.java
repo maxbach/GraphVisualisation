@@ -1,13 +1,6 @@
 package ru.dmop.graph;
 
-import com.mxgraph.util.mxConstants;
 import com.mxgraph.view.mxGraph;
-import com.mxgraph.view.mxStylesheet;
-
-import java.util.Hashtable;
-
-import static ru.dmop.graph.StyleConstants.*;
-
 
 public class GraphBuilder {
 
@@ -41,7 +34,7 @@ public class GraphBuilder {
         countConsts(numberOfNodes);
         Graph graph = new Graph();
         Object parent = graph.getDefaultParent();
-        addStyles(graph);
+        graph.addStyles();
 
         graph.getModel().beginUpdate();
         double realDensity = (double) density / (double) 100;
