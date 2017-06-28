@@ -1,7 +1,6 @@
 package ru.dmop.windows;
 
 import com.mxgraph.swing.mxGraphComponent;
-import com.mxgraph.view.mxGraph;
 import ru.dmop.finderWays.WayInGraph;
 import ru.dmop.graph.Graph;
 
@@ -25,6 +24,7 @@ public class VisualizationFrame extends JFrame {
         setContentPane(panel);
         pack();
         setVisible(true);
+        setLocationRelativeTo(null);
         JOptionPane.showMessageDialog(VisualizationFrame.this,
                 "Длина пути:" + way.getWayLength(),
                 "Way length",

@@ -2,9 +2,7 @@ package ru.dmop.windows;
 
 import com.mxgraph.swing.mxGraphComponent;
 import com.mxgraph.view.mxGraph;
-import ru.dmop.finderWays.DejkstraFinder;
-import ru.dmop.finderWays.FloydFinder;
-import ru.dmop.finderWays.WayInGraph;
+import ru.dmop.finderWays.*;
 import ru.dmop.graph.Graph;
 import ru.dmop.graph.GraphBuilder;
 
@@ -22,9 +20,9 @@ import static ru.dmop.graph.StyleConstants.*;
 
 public class GraphAndAlgoFrame extends JFrame {
 
-    mxGraphComponent graphComponent;
-    Object node1 = null;
-    Object node2 = null;
+    private mxGraphComponent graphComponent;
+    private Object node1 = null;
+    private Object node2 = null;
 
     public GraphAndAlgoFrame(final mxGraph graph) throws HeadlessException {
         super("Выбор вершины и алгоритма");
@@ -39,27 +37,7 @@ public class GraphAndAlgoFrame extends JFrame {
             public void mouseClicked(MouseEvent e) {
                 Object obj = graphComponent.getCellAt(e.getX(), e.getY());
                 if (obj != null && graph.getModel().isVertex(obj)) {
-
-                    if (node1 == null) {
-
-                        node1 = obj;
-                        setGreen(obj);
-                        Graph help = (Graph) graph;
-                       //graph.getModel().setStyle(help.getEdge(0,1), EDGE_STYLE);
-                    } else if (node2 == null) {
-
-                        node2 = obj;
-                        setRed(obj);
-
-                    } else {
-
-                        setDefault(node1);
-                        setGreen(obj);
-                        setDefault(node2);
-                        node1 = obj;
-                        node2 = null;
-
-                    }
+                    manageVertex(obj);
                 }
             }
         });
@@ -69,6 +47,8 @@ public class GraphAndAlgoFrame extends JFrame {
         setContentPane(mainBox);
         pack();
         setVisible(true);
+        setLocationRelativeTo(null);
+
 
     }
 
@@ -79,15 +59,33 @@ public class GraphAndAlgoFrame extends JFrame {
 
     private Box getButtons() {
         Box box = Box.createVerticalBox();
-        box.add(getDejkstraButton());
+        box.add(getAlgoButton(AlgorithmConstant.DEJKSTRA));
         box.add(Box.createVerticalStrut(10));
-        box.add(getFloydButton());
+
+        Graph graph = (Graph) graphComponent.getGraph();
+        if (graph.getNumberOfNodes() <= 25) {
+            box.add(getAlgoButton(AlgorithmConstant.FLOYD));
+            box.add(Box.createVerticalStrut(10));
+        }
         box.setAlignmentY(JComponent.CENTER_ALIGNMENT);
         return box;
     }
 
-    private JButton getDejkstraButton() {
-        JButton button = new JButton("Алгоритм Дейкстра");
+
+    private JButton getAlgoButton(AlgorithmConstant algorithmConstant) {
+        final String name;
+        final BaseFinder finder;
+
+        if (algorithmConstant == AlgorithmConstant.DEJKSTRA) {
+            name = "Алгоритм Дейкстра";
+            finder = new DejkstraFinder();
+        } else {
+            name = "Алгоритм Флойда";
+            finder = new FloydFinder();
+        }
+
+        JButton button = new JButton(name);
+
         button.addMouseListener(new MouseAdapter() {
 
             @Override
@@ -99,18 +97,19 @@ public class GraphAndAlgoFrame extends JFrame {
 
                     Graph graph = (Graph) graphComponent.getGraph();
                     Graph helpGraph = new Graph(graph);
-                    DejkstraFinder finder = new DejkstraFinder(helpGraph);
-                    int id1 = helpGraph.getIdOfNode(obj1);
-                    int id2 = helpGraph.getIdOfNode(obj2);
+                    finder.setGraph(helpGraph);
+                    int id1 = graph.getIdOfNode(obj1);
+                    int id2 = graph.getIdOfNode(obj2);
                     WayInGraph way = finder.getShortestPath(id1, id2);
-                    if (way.isOk()) {
-                        new VisualizationFrame(helpGraph, way, "Алгоритм Дейкстра");
+                    if (way != null && way.isOk()) {
+                        new VisualizationFrame(helpGraph, way, name);
                     } else {
                         JOptionPane.showMessageDialog(GraphAndAlgoFrame.this,
                                 "Нет пути между двумя вершинами",
                                 "Find way error",
                                 JOptionPane.ERROR_MESSAGE);
                     }
+                    clear();
 
                 }
 
@@ -118,52 +117,49 @@ public class GraphAndAlgoFrame extends JFrame {
             }
         });
         return button;
+
+
     }
 
-    private JButton getFloydButton() {
-        JButton button = new JButton("Алгоритм Флойда");
-        button.addMouseListener(new MouseAdapter() {
-
-            @Override
-            public void mouseClicked(MouseEvent e) {
-                Object obj1 = GraphAndAlgoFrame.this.node1;
-                Object obj2 = GraphAndAlgoFrame.this.node2;
-
-                if (obj1 != null && obj2 != null) {
-
-                    Graph graph = (Graph) graphComponent.getGraph();
-                    Graph helpGraph = new Graph(graph);
-                    FloydFinder finder = new FloydFinder(helpGraph);
-                    int id1 = helpGraph.getIdOfNode(obj1);
-                    int id2 = helpGraph.getIdOfNode(obj2);
-                    WayInGraph way = finder.getShortestPath(id1, id2);
-                    if (way.isOk()) {
-                        new VisualizationFrame(helpGraph, way, "Алгоритм Флойда");
-                    } else {
-                        JOptionPane.showMessageDialog(GraphAndAlgoFrame.this,
-                                "Нет пути между двумя вершинами",
-                                "Find way error",
-                                JOptionPane.ERROR_MESSAGE);
-                    }
-
-                }
-
-
+    private void manageVertex(Object obj) {
+        if (node1 == null) {
+            node1 = obj;
+            setGreen(obj);
+        } else if (node2 == null) {
+            if (node1 != obj) {
+                node2 = obj;
+                setRed(obj);
             }
-        });
-        return button;
+        } else {
+            setDefault(node1);
+            setGreen(obj);
+            setDefault(node2);
+            node1 = obj;
+            node2 = null;
+        }
     }
 
+    private void clear() {
+        setDefault(node1);
+        node1 = null;
+
+        setDefault(node2);
+        node2 = null;
+
+    }
     private void setGreen(Object obj) {
-
-        graphComponent.getGraph().getModel().setStyle(obj, GREEN_STYLE);
+        setStyleToObj(obj, GREEN_STYLE);
     }
 
     private void setRed(Object obj) {
-        graphComponent.getGraph().getModel().setStyle(obj, RED_STYLE);
+        setStyleToObj(obj, RED_STYLE);
     }
 
     private void setDefault(Object obj) {
-        graphComponent.getGraph().getModel().setStyle(obj, DEFAULT_STYLE);
+        setStyleToObj(obj, DEFAULT_STYLE);
+    }
+
+    private void setStyleToObj(Object obj, String style) {
+        graphComponent.getGraph().getModel().setStyle(obj, style);
     }
 }

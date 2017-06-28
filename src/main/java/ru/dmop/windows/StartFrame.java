@@ -46,7 +46,11 @@ public class StartFrame extends JFrame {
                         e1.printStackTrace();
                     }
                     setVisible(false);
-                        //new GraphAndAlgoFrame(GraphBuilder.getGraphFromFile(inputStream));
+//                    try {
+//                        new GraphAndAlgoFrame(GraphBuilder.getGraphFromFile(inputStream));
+//                    } catch (IOException e1) {
+//                        e1.printStackTrace();
+//                    }
                 }
             }
         });
@@ -57,6 +61,7 @@ public class StartFrame extends JFrame {
         setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
         pack();
         setVisible(true);
+        setLocationRelativeTo(null);
     }
 
 }

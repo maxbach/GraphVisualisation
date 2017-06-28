@@ -22,8 +22,6 @@ public class Graph extends mxGraph {
     public Graph() {
         super();
         nodesAndEdges = new HashMap<String, Object>();
-        numberOfNodes = new Integer(0);
-        numberOfEdges = new Integer(0);
     }
 
     // конструктор копирования
@@ -152,7 +150,7 @@ public class Graph extends mxGraph {
     public void highLightThePath(WayInGraph way) {
         int firstIndex = 0;
         int secondIndex = 1;
-        Object help = null;
+        Object help;
         int size = way.getWay().size();
         while (size != secondIndex){
             help = this.getEdge(way.getWay().get(firstIndex), way.getWay().get(secondIndex));
