@@ -3,6 +3,7 @@ package ru.dmop.windows;
 import com.mxgraph.swing.mxGraphComponent;
 import com.mxgraph.view.mxGraph;
 import ru.dmop.finderWays.DejkstraFinder;
+import ru.dmop.finderWays.FloydFinder;
 import ru.dmop.finderWays.WayInGraph;
 import ru.dmop.graph.Graph;
 import ru.dmop.graph.GraphBuilder;
@@ -43,7 +44,6 @@ public class GraphAndAlgoFrame extends JFrame {
 
                         node1 = obj;
                         setGreen(obj);
-
                     } else if (node2 == null) {
 
                         node2 = obj;
@@ -72,7 +72,6 @@ public class GraphAndAlgoFrame extends JFrame {
 
     public GraphAndAlgoFrame(int numberOfNodes, int density) {
         this(GraphBuilder.getRandomGraph(numberOfNodes, density));
-
     }
 
     private Box getButtons() {
@@ -80,10 +79,9 @@ public class GraphAndAlgoFrame extends JFrame {
         box.add(getDejkstraButton());
         box.add(Box.createVerticalStrut(10));
         box.add(getFloydButton());
+        box.add(Box.createVerticalStrut(10));
         box.setAlignmentY(JComponent.CENTER_ALIGNMENT);
         return box;
-
-
     }
 
     private JButton getDejkstraButton() {
@@ -114,44 +112,42 @@ public class GraphAndAlgoFrame extends JFrame {
 
                 }
 
-
             }
         });
         return button;
     }
 
     private JButton getFloydButton() {
-    JButton button = new JButton("Алгоритм Флойда");
-    button.addMouseListener(new MouseAdapter() {
+        JButton button = new JButton("РђР»РіРѕСЂРёС‚Рј Р¤Р»РѕР№РґР°");
+        button.addMouseListener(new MouseAdapter() {
 
-        @Override
-        public void mouseClicked(MouseEvent e) {
-            Object obj1 = GraphAndAlgoFrame.this.node1;
-            Object obj2 = GraphAndAlgoFrame.this.node2;
+            @Override
+            public void mouseClicked(MouseEvent e) {
+                Object obj1 = GraphAndAlgoFrame.this.node1;
+                Object obj2 = GraphAndAlgoFrame.this.node2;
 
-            if (obj1 != null && obj2 != null) {
+                if (obj1 != null && obj2 != null) {
 
-                Graph graph = (Graph) graphComponent.getGraph();
-                FloydFinder finder = new FloydFinder(graph);
-                int id1 = graph.getIdOfNode(obj1);
-                int id2 = graph.getIdOfNode(obj2);
-                WayInGraph way = finder.getShortestPath(id1, id2);
-                if (way.isOk()) {
-                    graph.highLightThePath(way);
-                    new VisualizationFrame(graph, "Алгоритм Флойда");
-                } else {
-                    JOptionPane.showMessageDialog(GraphAndAlgoFrame.this,
-                            "Нет пути между двумя вершинами",
-                            "Find way error",
-                            JOptionPane.ERROR_MESSAGE);
+                    Graph graph = (Graph) graphComponent.getGraph();
+                    FloydFinder finder = new FloydFinder(graph);
+                    int id1 = graph.getIdOfNode(obj1);
+                    int id2 = graph.getIdOfNode(obj2);
+                    WayInGraph way = finder.getShortestPath(id1, id2);
+                    if (way.isOk()) {
+                        graph.highLightThePath(way);
+                        new VisualizationFrame(graph, "РђР»РіРѕСЂРёС‚Рј Р¤Р»РѕР№РґР°");
+                    } else {
+                        JOptionPane.showMessageDialog(GraphAndAlgoFrame.this,
+                                "РќРµС‚ РїСѓС‚Рё РјРµР¶РґСѓ РґРІСѓРјСЏ РІРµСЂС€РёРЅР°РјРё",
+                                "Find way error",
+                                JOptionPane.ERROR_MESSAGE);
+                    }
+
                 }
-
             }
-        }
-    });
-    return button;
-}
-
+        });
+        return button;
+    }
 
     private void setGreen(Object obj) {
 
@@ -164,5 +160,6 @@ public class GraphAndAlgoFrame extends JFrame {
 
     private void setDefault(Object obj) {
         graphComponent.getGraph().getModel().setStyle(obj, DEFAULT_STYLE);
+
     }
 }
