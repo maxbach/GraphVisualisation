@@ -9,6 +9,7 @@ import ru.dmop.finderWays.WayInGraph;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Hashtable;
+import java.util.Map;
 
 import static ru.dmop.graph.StyleConstants.*;
 
@@ -23,6 +24,68 @@ public class Graph extends mxGraph {
         nodesAndEdges = new HashMap<String, Object>();
         numberOfNodes = new Integer(0);
         numberOfEdges = new Integer(0);
+    }
+
+    // конструктор копирования
+    public Graph(Graph other) {
+        super();
+
+        // создаем новый хэшмэп
+        nodesAndEdges = new HashMap<String, Object>();
+        getModel().beginUpdate();
+
+        // добавляем стили
+        addStyles();
+
+        try {
+            Object parent = getDefaultParent();
+
+            // прогоняем через все элементы старого графа и ищем вершины
+            for (Map.Entry<String, Object> s : other.getNodesAndEdges().entrySet()) {
+                mxCell cell = (mxCell) s.getValue();
+
+                // если вершина
+                if (cell.isVertex()) {
+
+                    // вычисляем id
+                    int id = getIdOfNode(cell);
+
+                    //вставляем вершину
+                    this.insertVertex(parent, id, cell.getValue(), cell.getGeometry().getX(),
+                            cell.getGeometry().getY(), cell.getGeometry().getWidth(), cell.getGeometry().getHeight());
+
+                    // не забываем вернуть зеленый и красный стиль началу и концу пути
+                    String styleOfCell = cell.getStyle();
+                    if (!styleOfCell.equals(StyleConstants.DEFAULT_STYLE)) {
+                        mxCell obj = (mxCell) this.nodesAndEdges.get(s.getKey());
+                        if (styleOfCell.equals(StyleConstants.GREEN_STYLE)) {
+                            obj.setStyle(GREEN_STYLE);
+                        } else {
+                            obj.setStyle(RED_STYLE);
+                        }
+
+                    }
+
+                }
+            }
+
+
+            // ищем все ребра
+            for (Map.Entry<String, Object> entry : other.getNodesAndEdges().entrySet()) {
+                mxCell cell = (mxCell) entry.getValue();
+                if (cell.isEdge()) {
+                    // вычисляем id начала и конца
+                    String string = cell.getId().substring(4);
+                    String[] nodes = string.split("_");
+                    int pointA = Integer.parseInt(nodes[0]);
+                    int pointB = Integer.parseInt(nodes[1]);
+
+                    this.insertEdge(parent, pointA, pointB, (Integer) cell.getValue());
+                }
+            }
+        } finally {
+            getModel().endUpdate();
+        }
     }
 
     public Object insertVertex(Object parent, int id, Object value, double x, double y, double width, double height) {
@@ -63,25 +126,9 @@ public class Graph extends mxGraph {
         return numberOfNodes;
     }
 
-    public void setNumberOfNodes(Integer numberOfNodes){
-        this.numberOfNodes = new Integer(numberOfNodes);
-    }
+    public Integer getNumberOfEdges() { return numberOfEdges; }
 
-    public Integer getNumberOfEdges() {
-        return numberOfEdges;
-    }
-
-    public void setNumberOfEdges(Integer numberOfEdges){
-        this.numberOfEdges = new Integer(numberOfEdges);
-    }
-
-    public HashMap<String, Object> getNodesAndEdges (){
-        return nodesAndEdges;
-    }
-
-    public void setNodesAndEdges (HashMap<String, Object> nodesAndEdges){
-        this.nodesAndEdges = new HashMap<String, Object>(nodesAndEdges);
-    }
+    public HashMap<String, Object> getNodesAndEdges (){ return nodesAndEdges; }
 
     public Integer getIdOfNode(Object object) {
         mxCell cell = (mxCell) object;
@@ -106,7 +153,6 @@ public class Graph extends mxGraph {
         int firstIndex = 0;
         int secondIndex = 1;
         Object help = null;
-        //this.getModel().setStyle(this.getEdge(0,1), EDGE_STYLE);
         int size = way.getWay().size();
         while (size != secondIndex){
             help = this.getEdge(way.getWay().get(firstIndex), way.getWay().get(secondIndex));

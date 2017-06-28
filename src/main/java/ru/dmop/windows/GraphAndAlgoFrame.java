@@ -98,13 +98,12 @@ public class GraphAndAlgoFrame extends JFrame {
                 if (obj1 != null && obj2 != null) {
 
                     Graph graph = (Graph) graphComponent.getGraph();
-                    Graph helpGraph = GraphBuilder.copyGraph(graph);
+                    Graph helpGraph = new Graph(graph);
                     DejkstraFinder finder = new DejkstraFinder(helpGraph);
                     int id1 = helpGraph.getIdOfNode(obj1);
                     int id2 = helpGraph.getIdOfNode(obj2);
                     WayInGraph way = finder.getShortestPath(id1, id2);
                     if (way.isOk()) {
-                        //helpGraph.highLightThePath(way);
                         new VisualizationFrame(helpGraph, way, "Алгоритм Дейкстра");
                     } else {
                         JOptionPane.showMessageDialog(GraphAndAlgoFrame.this,
@@ -133,13 +132,12 @@ public class GraphAndAlgoFrame extends JFrame {
                 if (obj1 != null && obj2 != null) {
 
                     Graph graph = (Graph) graphComponent.getGraph();
-                    Graph helpGraph = GraphBuilder.copyGraph(graph);
+                    Graph helpGraph = new Graph(graph);
                     FloydFinder finder = new FloydFinder(helpGraph);
                     int id1 = helpGraph.getIdOfNode(obj1);
                     int id2 = helpGraph.getIdOfNode(obj2);
                     WayInGraph way = finder.getShortestPath(id1, id2);
                     if (way.isOk()) {
-                        //helpGraph.highLightThePath(way);
                         new VisualizationFrame(helpGraph, way, "Алгоритм Флойда");
                     } else {
                         JOptionPane.showMessageDialog(GraphAndAlgoFrame.this,
