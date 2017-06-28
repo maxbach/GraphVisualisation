@@ -19,7 +19,7 @@ public class VisualizationFrame extends JFrame {
         super(name);
         setDefaultCloseOperation(WindowConstants.DISPOSE_ON_CLOSE);
         JPanel panel = new JPanel();
-        //graph.highLightThePath(way);
+        graph.highLightThePath(way);
         panel.add(new mxGraphComponent(graph));
         panel.add(new JButton("Next"));
         setContentPane(panel);

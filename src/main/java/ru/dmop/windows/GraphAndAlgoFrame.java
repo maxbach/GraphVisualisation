@@ -104,7 +104,7 @@ public class GraphAndAlgoFrame extends JFrame {
                     int id2 = helpGraph.getIdOfNode(obj2);
                     WayInGraph way = finder.getShortestPath(id1, id2);
                     if (way.isOk()) {
-                        helpGraph.highLightThePath(way);
+                        //helpGraph.highLightThePath(way);
                         new VisualizationFrame(helpGraph, way, "Алгоритм Дейкстра");
                     } else {
                         JOptionPane.showMessageDialog(GraphAndAlgoFrame.this,
@@ -139,7 +139,7 @@ public class GraphAndAlgoFrame extends JFrame {
                     int id2 = helpGraph.getIdOfNode(obj2);
                     WayInGraph way = finder.getShortestPath(id1, id2);
                     if (way.isOk()) {
-                        helpGraph.highLightThePath(way);
+                        //helpGraph.highLightThePath(way);
                         new VisualizationFrame(helpGraph, way, "Алгоритм Флойда");
                     } else {
                         JOptionPane.showMessageDialog(GraphAndAlgoFrame.this,
