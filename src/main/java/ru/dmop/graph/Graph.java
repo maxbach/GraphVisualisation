@@ -19,8 +19,6 @@ public class Graph extends mxGraph {
     public Graph() {
         super();
         nodesAndEdges = new HashMap<String, Object>();
-        numberOfNodes = new Integer(0);
-        numberOfEdges = new Integer(0);
     }
 
     public Object insertVertex(Object parent, int id, Object value, double x, double y, double width, double height) {
@@ -87,8 +85,7 @@ public class Graph extends mxGraph {
     public void highLightThePath(WayInGraph way) {
         int firstIndex = 0;
         int secondIndex = 1;
-        Object help = null;
-        //this.getModel().setStyle(this.getEdge(0,1), EDGE_STYLE);
+        Object help;
         int size = way.getWay().size();
         while (size != secondIndex){
             help = this.getEdge(way.getWay().get(firstIndex), way.getWay().get(secondIndex));

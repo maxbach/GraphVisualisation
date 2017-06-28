@@ -100,7 +100,7 @@ public class GraphAndAlgoFrame extends JFrame {
                     int id1 = graph.getIdOfNode(obj1);
                     int id2 = graph.getIdOfNode(obj2);
                     WayInGraph way = finder.getShortestPath(id1, id2);
-                    if (way.isOk()) {
+                    if (way != null) {
                         graph.highLightThePath(way);
                         new VisualizationFrame(graph, "Алгоритм Дейкстра");
                     } else {
@@ -133,7 +133,7 @@ public class GraphAndAlgoFrame extends JFrame {
                     int id1 = graph.getIdOfNode(obj1);
                     int id2 = graph.getIdOfNode(obj2);
                     WayInGraph way = finder.getShortestPath(id1, id2);
-                    if (way.isOk()) {
+                    if (way != null) {
                         graph.highLightThePath(way);
                         new VisualizationFrame(graph, "Алгоритм Флойда");
                     } else {

@@ -139,6 +139,10 @@ public class GraphBuilder {
         style.put(mxConstants.STYLE_FONTCOLOR, "#000000");
         stylesheet.putCellStyle(DEFAULT_STYLE, style);
 
+        style = new Hashtable<String, Object>();
+        style.put(mxConstants.STYLE_STROKEWIDTH, 5);
+        style.put(mxConstants.STYLE_STROKECOLOR, "#D32F2F");
+        stylesheet.putCellStyle(EDGE_STYLE, style);
     }
 
 

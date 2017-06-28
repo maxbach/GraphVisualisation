@@ -1,11 +1,11 @@
 package ru.dmop.windows;
 
-import ru.dmop.graph.GraphBuilder;
-
 import javax.swing.*;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
-import java.io.*;
+import java.io.FileInputStream;
+import java.io.FileNotFoundException;
+import java.io.InputStream;
 
 /**
  * Стартовый экран
@@ -46,11 +46,11 @@ public class StartFrame extends JFrame {
                         e1.printStackTrace();
                     }
                     setVisible(false);
-                    try {
-                        new GraphAndAlgoFrame(GraphBuilder.getGraphFromFile(inputStream));
-                    } catch (IOException e1) {
-                        e1.printStackTrace();
-                    }
+//                    try {
+//                        new GraphAndAlgoFrame(GraphBuilder.getGraphFromFile(inputStream));
+//                    } catch (IOException e1) {
+//                        e1.printStackTrace();
+//                    }
                 }
             }
         });
