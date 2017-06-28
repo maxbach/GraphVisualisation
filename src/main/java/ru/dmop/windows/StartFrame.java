@@ -5,7 +5,7 @@ import ru.dmop.graph.GraphBuilder;
 import javax.swing.*;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
-import java.io.File;
+import java.io.*;
 
 /**
  * Стартовый экран
@@ -30,21 +30,27 @@ public class StartFrame extends JFrame {
         box.add(Box.createVerticalStrut(10));
         box.add(Box.createVerticalGlue());
 
-        JButton exit = new JButton("GraphFromFile");
-        exit.setAlignmentX(JComponent.CENTER_ALIGNMENT);
-        exit.addMouseListener(new MouseAdapter() {
+        JButton GraphFromFile = new JButton("GraphFromFile");
+        GraphFromFile.setAlignmentX(JComponent.CENTER_ALIGNMENT);
+        GraphFromFile.addMouseListener(new MouseAdapter() {
             @Override
             public void mouseClicked(MouseEvent e) {
                 JFileChooser fileopen = new JFileChooser();
                 int ret = fileopen.showDialog(null, "Открыть файл");
                 if (ret == JFileChooser.APPROVE_OPTION) {
-                    File file = fileopen.getSelectedFile();
+                    //InputOutputStream io = new InputOutputStream (fileopen.getSelectedFile());
+                    InputStream inputStream = null;
+                    try {
+                        inputStream = new FileInputStream(fileopen.getSelectedFile());
+                    } catch (FileNotFoundException e1) {
+                        e1.printStackTrace();
+                    }
                     setVisible(false);
-                    new GraphAndAlgoFrame(GraphBuilder.getGraph());
+                        //new GraphAndAlgoFrame(GraphBuilder.getGraphFromFile(inputStream));
                 }
             }
         });
-        box.add(exit);
+        box.add(GraphFromFile);
         box.add(Box.createVerticalStrut(20));
 
         setContentPane(box);
