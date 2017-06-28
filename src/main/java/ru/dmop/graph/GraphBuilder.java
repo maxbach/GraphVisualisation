@@ -1,14 +1,6 @@
 package ru.dmop.graph;
 
-import com.mxgraph.util.mxConstants;
 import com.mxgraph.view.mxGraph;
-import com.mxgraph.view.mxStylesheet;
-import ru.dmop.graph.Graph;
-
-import java.util.Hashtable;
-
-import static ru.dmop.graph.StyleConstants.*;
-
 
 public class GraphBuilder {
 
@@ -120,23 +112,4 @@ public class GraphBuilder {
         y = 10;
 
     }
-
-    public static Graph copyGraph (Graph other){
-        Graph graph = new Graph();
-        Object parent = graph.getDefaultParent();
-
-        graph.getModel().beginUpdate();
-        try {
-            graph.addCells(other.cloneCells(other.getChildCells(other.getDefaultParent())));
-            graph.setNumberOfNodes(other.getNumberOfNodes());
-            graph.setNumberOfEdges(other.getNumberOfEdges());
-            graph.setNodesAndEdges(other.getNodesAndEdges());
-            graph.addStyles();
-        } finally {
-            graph.getModel().endUpdate();
-        }
-        return graph;
-    }
-
-
 }
