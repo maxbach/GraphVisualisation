@@ -28,6 +28,7 @@ public class RandomFrame extends JFrame {
         setContentPane(mainBox);
         pack();
         setVisible(true);
+        setLocationRelativeTo(null);
     }
 
     private Box getBoxOfChosingNumber() {

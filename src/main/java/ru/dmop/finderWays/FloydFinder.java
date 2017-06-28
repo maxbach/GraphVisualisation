@@ -10,35 +10,16 @@ public class FloydFinder implements BaseFinder {
         int weight;
         int help_vertex;
     }
-    int size;
-    Pair[][] matrix;
-    Graph graph;
 
-    public FloydFinder (Graph graph){
-        this.graph = graph;
-        size = graph.getNumberOfNodes().intValue();
-        matrix = new Pair[size][size];
-        for (int i = 0; i < size; ++i)
-            for (int j = 0; j < size; ++j){
-                matrix[i][j] = new Pair();
-            }
+    private int size;
+    private Pair[][] matrix;
+    private Graph graph;
 
-        for (int i = 0; i < size; ++i) {
-            for (int j = 0; j < size; ++j) {
-                if (i == j) matrix[i][j].weight = 0;
-                else
-                    matrix[i][j].weight = Integer.MAX_VALUE;
-                matrix[i][j].help_vertex = i;
-            }
-        }
+    public FloydFinder() {
+    }
 
-        for (int i = 0; i != size; ++i) {
-            for (int j = 0; j != size; ++j){
-                if (graph.getWeightOfEdge(i,j) != null)
-                    matrix[i][j].weight = graph.getWeightOfEdge(i,j).intValue();
-            }
-        }
-        change_matrix();
+    public FloydFinder(Graph graph) {
+        setGraph(graph);
 
     }
 
@@ -67,29 +48,55 @@ public class FloydFinder implements BaseFinder {
         if ((matrix[pointA][pointB].help_vertex == pointB) || (matrix[pointA][pointB].help_vertex == pointA)) return;
         if (matrix[pointA][pointB].help_vertex != pointA) {
             getShortestPathMain(pointA, matrix[pointA][pointB].help_vertex, way);
-            Integer help = new Integer (matrix[pointA][pointB].help_vertex);
+            Integer help = matrix[pointA][pointB].help_vertex;
             way.add(help);
             getShortestPathMain(matrix[pointA][pointB].help_vertex, pointB, way);
         }
     }
 
-    public WayInGraph getShortestPath(int pointA, int pointB)  {
+    public WayInGraph getShortestPath(int pointA, int pointB) {
         ArrayList<Integer> way = new ArrayList<Integer>();
         if (matrix[pointA][pointB].weight == Integer.MAX_VALUE) {
             return new WayInGraph(0);
-        }
-        else {
+        } else {
             way.add(pointA);
             getShortestPathMain(pointA, pointB, way);
             way.add(pointB);
             int length = 0;
             int i = 1;
             while (i != way.size()) {
-                length += graph.getWeightOfEdge(way.get(i-1), way.get(i));
+                length += graph.getWeightOfEdge(way.get(i - 1), way.get(i));
                 ++i;
             }
             return new WayInGraph(length, way);
         }
+    }
+
+    public void setGraph(Graph graph) {
+        this.graph = graph;
+        size = graph.getNumberOfNodes();
+        matrix = new Pair[size][size];
+        for (int i = 0; i < size; ++i)
+            for (int j = 0; j < size; ++j) {
+                matrix[i][j] = new Pair();
+            }
+
+        for (int i = 0; i < size; ++i) {
+            for (int j = 0; j < size; ++j) {
+                if (i == j) matrix[i][j].weight = 0;
+                else
+                    matrix[i][j].weight = Integer.MAX_VALUE;
+                matrix[i][j].help_vertex = i;
+            }
+        }
+
+        for (int i = 0; i != size; ++i) {
+            for (int j = 0; j != size; ++j) {
+                if (graph.getWeightOfEdge(i, j) != null)
+                    matrix[i][j].weight = graph.getWeightOfEdge(i, j);
+            }
+        }
+        change_matrix();
     }
 
 }

@@ -22,6 +22,7 @@ public class VisualizationFrame extends JFrame {
         setContentPane(panel);
         pack();
         setVisible(true);
+        setLocationRelativeTo(null);
         JOptionPane.showMessageDialog(VisualizationFrame.this,
                 "Длина пути:" + way.getWayLength(),
                 "Way length",

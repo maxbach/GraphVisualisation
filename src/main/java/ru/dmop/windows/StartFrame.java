@@ -61,6 +61,7 @@ public class StartFrame extends JFrame {
         setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
         pack();
         setVisible(true);
+        setLocationRelativeTo(null);
     }
 
 }
