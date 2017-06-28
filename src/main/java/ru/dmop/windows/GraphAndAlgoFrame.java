@@ -121,17 +121,37 @@ public class GraphAndAlgoFrame extends JFrame {
     }
 
     private JButton getFloydButton() {
-        JButton button = new JButton("РђР»РіРѕСЂРёС‚Рј Р¤Р»РѕР№РґР°");
-        button.addMouseListener(new MouseAdapter() {
+    JButton button = new JButton("Алгоритм Флойда");
+    button.addMouseListener(new MouseAdapter() {
 
-            @Override
-            public void mouseClicked(MouseEvent e) {
-                // РѕС‚РєСЂС‹РІР°РµРј РЅРѕРІРѕРµ РѕРєРЅРѕ
-                new VisualizationFrame(graphComponent.getGraph(), "РђР»РіРѕСЂРёС‚Рј Р¤Р»РѕР№РґР°");
+        @Override
+        public void mouseClicked(MouseEvent e) {
+            Object obj1 = GraphAndAlgoFrame.this.node1;
+            Object obj2 = GraphAndAlgoFrame.this.node2;
+
+            if (obj1 != null && obj2 != null) {
+
+                Graph graph = (Graph) graphComponent.getGraph();
+                FloydFinder finder = new FloydFinder(graph);
+                int id1 = graph.getIdOfNode(obj1);
+                int id2 = graph.getIdOfNode(obj2);
+                WayInGraph way = finder.getShortestPath(id1, id2);
+                if (way.isOk()) {
+                    graph.highLightThePath(way);
+                    new VisualizationFrame(graph, "Алгоритм Флойда");
+                } else {
+                    JOptionPane.showMessageDialog(GraphAndAlgoFrame.this,
+                            "Нет пути между двумя вершинами",
+                            "Find way error",
+                            JOptionPane.ERROR_MESSAGE);
+                }
+
             }
-        });
-        return button;
-    }
+        }
+    });
+    return button;
+}
+
 
     private void setGreen(Object obj) {
 
