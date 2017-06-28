@@ -101,8 +101,9 @@ public class GraphAndAlgoFrame extends JFrame {
                     int id2 = graph.getIdOfNode(obj2);
                     WayInGraph way = finder.getShortestPath(id1, id2);
                     if (way.isOk()) {
-                        graph.highLightThePath(way);
-                        new VisualizationFrame(graph, "Алгоритм Дейкстра");
+                        graph.highLightThePath(way, EDGE_STYLE);
+                        new VisualizationFrame(graph, way, "Алгоритм Дейкстра");
+                        //graph.highLightThePath(way, EDGE_DEFAULT_STYLE);
                     } else {
                         JOptionPane.showMessageDialog(GraphAndAlgoFrame.this,
                                 "Нет пути между двумя вершинами",
@@ -134,8 +135,8 @@ public class GraphAndAlgoFrame extends JFrame {
                     int id2 = graph.getIdOfNode(obj2);
                     WayInGraph way = finder.getShortestPath(id1, id2);
                     if (way.isOk()) {
-                        graph.highLightThePath(way);
-                        new VisualizationFrame(graph, "Алгоритм Флойда");
+                        graph.highLightThePath(way, EDGE_STYLE);
+                        new VisualizationFrame(graph, way, "Алгоритм Флойда");
                     } else {
                         JOptionPane.showMessageDialog(GraphAndAlgoFrame.this,
                                 "Нет пути между двумя вершинами",
