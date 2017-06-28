@@ -107,6 +107,7 @@ public class GraphBuilder {
         return graph;
     }
 
+
     private static void countConsts(int numberOfNodes) {
         double radius = width + numberOfNodes * 10;
         centerX = radius + 10;
@@ -117,6 +118,22 @@ public class GraphBuilder {
         x = centerX;
         y = 10;
 
+    }
+
+    public static Graph copyGraph (Graph other){
+        Graph graph = new Graph();
+        Object parent = graph.getDefaultParent();
+
+        graph.getModel().beginUpdate();
+        try {
+            graph.addCells(other.cloneCells(other.getChildCells(other.getDefaultParent())));
+            graph.setNumberOfNodes(other.getNumberOfNodes());
+            graph.setNumberOfEdges(other.getNumberOfEdges());
+            graph.setNodesAndEdges(other.getNodesAndEdges());
+        } finally {
+            graph.getModel().endUpdate();
+        }
+        return graph;
     }
 
     private static void addStyles(Graph graph) {
@@ -138,6 +155,11 @@ public class GraphBuilder {
         style.put(mxConstants.STYLE_FILLCOLOR, "#B3E5FC");
         style.put(mxConstants.STYLE_FONTCOLOR, "#000000");
         stylesheet.putCellStyle(DEFAULT_STYLE, style);
+
+        style = new Hashtable<String, Object>();
+        style.put(mxConstants.STYLE_STROKEWIDTH, 5);
+        style.put(mxConstants.STYLE_STROKECOLOR, "#D32F2F");
+        stylesheet.putCellStyle(EDGE_STYLE, style);
 
     }
 

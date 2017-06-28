@@ -98,13 +98,14 @@ public class GraphAndAlgoFrame extends JFrame {
                 if (obj1 != null && obj2 != null) {
 
                     Graph graph = (Graph) graphComponent.getGraph();
-                    DejkstraFinder finder = new DejkstraFinder(graph);
-                    int id1 = graph.getIdOfNode(obj1);
-                    int id2 = graph.getIdOfNode(obj2);
+                    Graph helpGraph = GraphBuilder.copyGraph(graph);
+                    DejkstraFinder finder = new DejkstraFinder(helpGraph);
+                    int id1 = helpGraph.getIdOfNode(obj1);
+                    int id2 = helpGraph.getIdOfNode(obj2);
                     WayInGraph way = finder.getShortestPath(id1, id2);
                     if (way.isOk()) {
-                        graph.highLightThePath(way);
-                        new VisualizationFrame(graph, "Алгоритм Дейкстра");
+                        helpGraph.highLightThePath(way);
+                        new VisualizationFrame(helpGraph, way, "Алгоритм Дейкстра");
                     } else {
                         JOptionPane.showMessageDialog(GraphAndAlgoFrame.this,
                                 "Нет пути между двумя вершинами",
@@ -126,10 +127,29 @@ public class GraphAndAlgoFrame extends JFrame {
 
             @Override
             public void mouseClicked(MouseEvent e) {
-                // открываем новое окно
-                Graph graph = (Graph) graphComponent.getGraph();
-                FloydFinder finder = new FloydFinder(graph);
-                    new VisualizationFrame(graphComponent.getGraph(), "Алгоритм Флойда");
+                Object obj1 = GraphAndAlgoFrame.this.node1;
+                Object obj2 = GraphAndAlgoFrame.this.node2;
+
+                if (obj1 != null && obj2 != null) {
+
+                    Graph graph = (Graph) graphComponent.getGraph();
+                    Graph helpGraph = GraphBuilder.copyGraph(graph);
+                    FloydFinder finder = new FloydFinder(helpGraph);
+                    int id1 = helpGraph.getIdOfNode(obj1);
+                    int id2 = helpGraph.getIdOfNode(obj2);
+                    WayInGraph way = finder.getShortestPath(id1, id2);
+                    if (way.isOk()) {
+                        helpGraph.highLightThePath(way);
+                        new VisualizationFrame(helpGraph, way, "Алгоритм Флойда");
+                    } else {
+                        JOptionPane.showMessageDialog(GraphAndAlgoFrame.this,
+                                "Нет пути между двумя вершинами",
+                                "Find way error",
+                                JOptionPane.ERROR_MESSAGE);
+                    }
+
+                }
+
 
             }
         });
