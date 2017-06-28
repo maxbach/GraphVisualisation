@@ -61,8 +61,24 @@ public class Graph extends mxGraph {
         return numberOfNodes;
     }
 
+    public void setNumberOfNodes(Integer numberOfNodes){
+        this.numberOfNodes = new Integer(numberOfNodes);
+    }
+
     public Integer getNumberOfEdges() {
         return numberOfEdges;
+    }
+
+    public void setNumberOfEdges(Integer numberOfEdges){
+        this.numberOfEdges = new Integer(numberOfEdges);
+    }
+
+    public HashMap<String, Object> getNodesAndEdges (){
+        return nodesAndEdges;
+    }
+
+    public void setNodesAndEdges (HashMap<String, Object> nodesAndEdges){
+        this.nodesAndEdges = new HashMap<String, Object>(nodesAndEdges);
     }
 
     public Integer getIdOfNode(Object object) {
