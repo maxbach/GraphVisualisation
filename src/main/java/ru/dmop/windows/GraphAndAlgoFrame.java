@@ -129,7 +129,7 @@ public class GraphAndAlgoFrame extends JFrame {
 
                     WayInGraph way = finder.getShortestPath(id1, id2);
                     if (way != null && way.isOk()) {
-                        new VisualisationFloydFrame(helpGraph, way, name);
+                        new VisualisationFloydFrame(helpGraph, way);
                     } else {
                         JOptionPane.showMessageDialog(GraphAndAlgoFrame.this,
                                 "Нет пути между двумя вершинами",
