@@ -55,7 +55,7 @@ public class MatrixFrame extends JFrame {
         rows.add(Box.createVerticalGlue());
         JLabel label;
         for (int i = 0; i < size; ++i) {
-            label = new JLabel(new String((char) (i + 'A') + ""));
+            label = new JLabel((char) (i + 'A') + "");
             label.setVerticalAlignment(JLabel.TOP);
             rows.add(label);
         }
