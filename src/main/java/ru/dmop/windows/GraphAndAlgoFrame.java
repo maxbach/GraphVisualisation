@@ -74,7 +74,7 @@ public class GraphAndAlgoFrame extends JFrame {
     }
 
     private JButton getDejkstraButton() {
-        final String name = "Алгоритм Дейкстра";
+        final String name = "Алгоритм Дейкстры";
 
         JButton button = new JButton(name);
 

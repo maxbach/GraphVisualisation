@@ -71,8 +71,6 @@ public class DejkstraFinder implements BaseFinder {
 
     public void doNextStep() {
         if (isReady) {
-            setDefaultNode(currentNode);
-            setDefaultEdges(relatedNodes);
             WayInGraph way = findWay(pointA, pointB);
             if (way != null && way.isOk()) {
                 graph.highLightThePath(way);
@@ -82,7 +80,6 @@ public class DejkstraFinder implements BaseFinder {
 
         } else if (currentNode == -1) {
             currentNode = pointA;
-            setHighlightNode(currentNode);
             message = "Рассмотрим вершину " + graph.getNameOfNode(currentNode);
             relatedNodes = graph.getRelatedNodes(currentNode);
             if (relatedNodes.size() == 0) {
@@ -90,6 +87,7 @@ public class DejkstraFinder implements BaseFinder {
                 isReady = true;
                 currentNode = -1;
             } else {
+                setHighlightNode(currentNode);
                 setRelatedEdges(relatedNodes);
                 currentRelatedNode = 0;
                 message = message + ". Выходящие ребра: " + relatedNodes.size() + ". Сделаем релаксацию всех ребер";
@@ -99,12 +97,23 @@ public class DejkstraFinder implements BaseFinder {
             setDefaultNode(currentNode);
             setDefaultEdges(relatedNodes);
             currentNode = findMin();
+            if (currentNode == null) {
+                message = "Больше нет вариантов для перебора. Нет пути.";
+                isReady = true;
+                currentNode = -1;
+                return;
+            } else if (currentNode.equals(pointB)) {
+                isReady = true;
+                message = "Мы добрались до конечной вершины. Нажми next, чтобы узнать путь.";
+                return;
+            }
             setHighlightNode(currentNode);
             message = "Рассмотрим вершину " + graph.getNameOfNode(currentNode);
             if (ways[currentNode] == Integer.MAX_VALUE) {
                 message = message + ". Все плохо (придумать причину). Нет пути";
                 isReady = true;
                 currentNode = -1;
+                return;
             }
             relatedNodes = graph.getRelatedNodes(currentNode);
             if (relatedNodes.size() == 0) {
@@ -130,9 +139,6 @@ public class DejkstraFinder implements BaseFinder {
             if (currentRelatedNode == relatedNodes.size()) {
                 isAlso[currentNode] = true;
                 currentRelatedNode = -1;
-                if (currentNode.equals(pointB)) {
-                    isReady = true;
-                }
             }
         }
     }
@@ -199,9 +205,6 @@ public class DejkstraFinder implements BaseFinder {
     }
 
 
-
-
-
     private void relax(int pointA, int pointB) {
         int length = graph.getWeightOfEdge(pointA, pointB);
         if (!isAlso[pointB] && ways[pointA] + length < ways[pointB]) {
@@ -258,7 +261,7 @@ public class DejkstraFinder implements BaseFinder {
 
     private Integer findMin() {
         int minWay = Integer.MAX_VALUE;
-        Integer min = 0;
+        Integer min = -1;
 
         for (int i = 0; i < graph.getNumberOfNodes(); ++i) {
             if (ways[i] < minWay && !isAlso[i]) {
@@ -267,7 +270,13 @@ public class DejkstraFinder implements BaseFinder {
             }
         }
 
-        return min;
+        if (min == -1) {
+            return null;
+        } else {
+            return min;
+        }
+
+
     }
 
     private WayInGraph findWay(int pointA, int pointB) {

@@ -15,7 +15,7 @@ public class VisualisationDejkstraFrame extends JFrame {
     JLabel label;
 
     public VisualisationDejkstraFrame(DejkstraFinder finder) throws HeadlessException {
-        super("Визуализация алгоритма Дейкстра");
+        super("Визуализация алгоритма Дейкстры");
         this.finder = finder;
         setDefaultCloseOperation(WindowConstants.DISPOSE_ON_CLOSE);
         finder.initGraph();
