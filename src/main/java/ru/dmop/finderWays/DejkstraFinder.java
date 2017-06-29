@@ -7,7 +7,7 @@ import ru.dmop.graph.StyleConstants;
 
 import java.util.ArrayList;
 
-public class DejkstraFinder implements BaseFinder {
+public class DejkstraFinder {
 
     private Boolean[] isAlso;
     private Integer[] prev;
@@ -24,30 +24,11 @@ public class DejkstraFinder implements BaseFinder {
     private Boolean isReady = false;
     private String message = "";
 
-    public DejkstraFinder() {
-    }
 
     public DejkstraFinder(Graph graph, Integer pointA, Integer pointB) {
         this.pointA = pointA;
         this.pointB = pointB;
         setGraph(graph);
-    }
-
-    public void setGraph(Graph graph) {
-        this.graph = graph;
-        isAlso = new Boolean[graph.getNumberOfNodes()];
-        prev = new Integer[graph.getNumberOfNodes()];
-        ways = new Integer[graph.getNumberOfNodes()];
-
-        for (int i = 0; i < graph.getNumberOfNodes(); i++) {
-            if (i == pointA) {
-                prev[i] = -1;
-                ways[i] = 0;
-            } else {
-                ways[i] = Integer.MAX_VALUE;
-            }
-            isAlso[i] = false;
-        }
     }
 
     public void initGraph() {
@@ -204,7 +185,6 @@ public class DejkstraFinder implements BaseFinder {
         }
     }
 
-
     private void relax(int pointA, int pointB) {
         int length = graph.getWeightOfEdge(pointA, pointB);
         if (!isAlso[pointB] && ways[pointA] + length < ways[pointB]) {
@@ -228,36 +208,6 @@ public class DejkstraFinder implements BaseFinder {
         mxCell cell = (mxCell) graph.getNode(nodeId);
         cell.setValue(graph.getNameOfNode(nodeId) + " (" + newWeight + ") -> " + graph.getNameOfNode(newPrev));
     }
-
-    public WayInGraph getShortestPath(int pointA, int pointB) {
-        for (int i = 0; i < graph.getNumberOfNodes(); ++i) {
-            isAlso[i] = false;
-            prev[i] = pointA;
-            if (i == pointA) {
-                ways[i] = 0;
-            } else {
-                ways[i] = Integer.MAX_VALUE;
-            }
-        }
-
-        for (int j = 0; j < graph.getNumberOfNodes(); ++j) {
-            Integer current = j == 0 ? pointA : findMin();
-            isAlso[current] = true;
-            if (ways[current] == Integer.MAX_VALUE) {
-                continue;
-            }
-            ArrayList<Integer> relatedNodes = graph.getRelatedNodes(current);
-            for (Integer node : relatedNodes) {
-                relax(current, node);
-            }
-
-            if (current == pointB) {
-                return findWay(pointA, pointB);
-            }
-        }
-        return null;
-    }
-
 
     private Integer findMin() {
         int minWay = Integer.MAX_VALUE;
@@ -296,6 +246,23 @@ public class DejkstraFinder implements BaseFinder {
 
     public Graph getGraph() {
         return graph;
+    }
+
+    public void setGraph(Graph graph) {
+        this.graph = graph;
+        isAlso = new Boolean[graph.getNumberOfNodes()];
+        prev = new Integer[graph.getNumberOfNodes()];
+        ways = new Integer[graph.getNumberOfNodes()];
+
+        for (int i = 0; i < graph.getNumberOfNodes(); i++) {
+            if (i == pointA) {
+                prev[i] = -1;
+                ways[i] = 0;
+            } else {
+                ways[i] = Integer.MAX_VALUE;
+            }
+            isAlso[i] = false;
+        }
     }
 
     public Boolean isReady() {

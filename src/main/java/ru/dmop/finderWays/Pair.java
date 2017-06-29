@@ -1,4 +1,4 @@
-package ru.dmop;
+package ru.dmop.finderWays;
 
 /**
  * Created by vend on 29.06.2017.

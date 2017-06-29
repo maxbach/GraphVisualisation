@@ -96,7 +96,7 @@ public class GraphBuilder {
         return graph;
     }
 
-    public static Graph getGraphFromFile(InputStream stream){
+    public static Graph getGraphFromFile(InputStream stream) {
         int numberOfEdgesFromAGivenVertex, indexOfSecondVertex, edgeWeight;
 
         Graph graph = new Graph();
@@ -115,7 +115,7 @@ public class GraphBuilder {
                     conversion();
                 }
                 numberOfEdgesFromAGivenVertex = scanner.nextInt();
-                for (int j = 0; j < numberOfEdgesFromAGivenVertex; ++j){
+                for (int j = 0; j < numberOfEdgesFromAGivenVertex; ++j) {
                     indexOfSecondVertex = scanner.nextInt();
                     if (graph.getNode(indexOfSecondVertex) == null) {
                         graph.insertNode(parent, indexOfSecondVertex, graph.getNameOfNode(indexOfSecondVertex)
@@ -123,18 +123,17 @@ public class GraphBuilder {
                         conversion();
                     }
                     edgeWeight = scanner.nextInt();
-                    if (edgeWeight < 0){
+                    if (edgeWeight < 0) {
                         new ErrorFrame("Некорректный формат входных данных", "Ошибка ввода графа");
                         return null;
                     }
                     graph.insertEdge(parent, i, indexOfSecondVertex, edgeWeight);
                 }
             }
-        } catch (Exception el){
+        } catch (Exception el) {
             new ErrorFrame("Некорректный формат входных данных", "Ошибка ввода графа");
             return null;
-        }
-        finally {
+        } finally {
             graph.getModel().endUpdate();
         }
 
@@ -152,7 +151,7 @@ public class GraphBuilder {
         y = 10;
     }
 
-    private static void conversion () {
+    private static void conversion() {
         double tempX = centerX + (x - centerX) * cos - (y - centerY) * sin;
         double tempY = centerY + (y - centerY) * cos + (x - centerX) * sin;
         x = tempX;

@@ -1,20 +1,16 @@
 package ru.dmop.finderWays;
 
-import ru.dmop.Pair;
 import ru.dmop.graph.Graph;
-import ru.dmop.Triple;
 
 import javax.swing.table.AbstractTableModel;
 import java.util.ArrayList;
 
-public class FloydFinder extends AbstractTableModel implements BaseFinder  {
+public class FloydFinder extends AbstractTableModel {
 
     private int size;
     private Pair[][] matrix;
     private Graph graph;
 
-    public FloydFinder() {
-    }
 
     public FloydFinder(Graph graph) {
         setGraph(graph);
@@ -103,21 +99,23 @@ public class FloydFinder extends AbstractTableModel implements BaseFinder  {
         }
     }
 
-    public int getSize (){
+    public int getSize() {
         return size;
     }
 
     public int getRowCount() {
         return size;
     }
+
     public int getColumnCount() {
         return size;
     }
+
     public Object getValueAt(int r, int c) {
         if (matrix[r][c].weight == Integer.MAX_VALUE)
-            return new String("oo" + " , " + (char)(matrix[r][c].help_vertex + 'A'));
+            return "oo" + " , " + (char) (matrix[r][c].help_vertex + 'A');
         else
-            return new String(matrix[r][c].weight + " , " + (char)(matrix[r][c].help_vertex + 'A'));
+            return matrix[r][c].weight + " , " + (char) (matrix[r][c].help_vertex + 'A');
     }
 
 }

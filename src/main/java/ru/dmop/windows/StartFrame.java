@@ -6,7 +6,9 @@ import ru.dmop.graph.GraphBuilder;
 import javax.swing.*;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
-import java.io.*;
+import java.io.FileInputStream;
+import java.io.FileNotFoundException;
+import java.io.InputStream;
 
 /**
  * Стартовый экран
@@ -48,7 +50,7 @@ public class StartFrame extends JFrame {
                     setVisible(false);
                     Object graph = GraphBuilder.getGraphFromFile(inputStream);
                     if (graph != null)
-                        new GraphAndAlgoFrame((mxGraph)graph);
+                        new GraphAndAlgoFrame((mxGraph) graph);
                     else
                         setVisible(true);
                 }

@@ -98,17 +98,6 @@ public class GraphAndAlgoFrame extends JFrame {
                     DejkstraFinder finder = new DejkstraFinder(helpGraph, id1, id2);
                     new VisualisationDejkstraFrame(finder);
 
-
-//                    WayInGraph way = finder.getShortestPath(id1, id2);
-//                    if (way != null && way.isOk()) {
-//                        new VisualisationDejkstraFrame(helpGraph, way, name, finder);
-//                    } else {
-//                        JOptionPane.showMessageDialog(GraphAndAlgoFrame.this,
-//                                "Нет пути между двумя вершинами",
-//                                "Find way error",
-//                                JOptionPane.ERROR_MESSAGE);
-//                    }
-
                     clear();
                 }
 
@@ -161,7 +150,7 @@ public class GraphAndAlgoFrame extends JFrame {
         return button;
     }
 
-    private JButton getWriteGraphButton () {
+    private JButton getWriteGraphButton() {
         final String name = "Записать граф в файл";
 
         JButton button = new JButton(name);

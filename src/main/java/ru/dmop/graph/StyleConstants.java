@@ -25,76 +25,76 @@ public class StyleConstants {
         mxStylesheet stylesheet = graph.getStylesheet();
 
         // custom vertex style
-        style = new Hashtable<String, Object>();
+        style = new Hashtable<>();
         style.put(mxConstants.STYLE_FILLCOLOR, "#388E3C");
         style.put(mxConstants.STYLE_FONTCOLOR, "#ffffff");
         stylesheet.putCellStyle(GREEN_STYLE, style);
 
-        style = new Hashtable<String, Object>();
+        style = new Hashtable<>();
         style.put(mxConstants.STYLE_FILLCOLOR, "#D32F2F");
         style.put(mxConstants.STYLE_FONTCOLOR, "#ffffff");
         stylesheet.putCellStyle(RED_STYLE, style);
 
-        style = new Hashtable<String, Object>();
+        style = new Hashtable<>();
         style.put(mxConstants.STYLE_FILLCOLOR, "#B3E5FC");
         style.put(mxConstants.STYLE_FONTCOLOR, "#000000");
         stylesheet.putCellStyle(DEFAULT_STYLE, style);
 
-        style = new Hashtable<String, Object>();
+        style = new Hashtable<>();
         style.put(mxConstants.STYLE_STROKEWIDTH, 5);
         style.put(mxConstants.STYLE_STROKECOLOR, "#D32F2F");
         style.put(mxConstants.STYLE_FONTCOLOR, "#1565C0");
         stylesheet.putCellStyle(HIGHLIGHTED_EDGE_STYLE, style);
 
-        style = new Hashtable<String, Object>();
+        style = new Hashtable<>();
         style.put(mxConstants.STYLE_STROKEWIDTH, 1);
         style.put(mxConstants.STYLE_STROKECOLOR, "#BBDEFB");
         style.put(mxConstants.STYLE_FONTCOLOR, "#000000");
         stylesheet.putCellStyle(DEFAULT_EDGE_STYLE, style);
 
-        style = new Hashtable<String, Object>();
+        style = new Hashtable<>();
         style.put(mxConstants.STYLE_STROKEWIDTH, 5);
         style.put(mxConstants.STYLE_STROKECOLOR, "#304FFE");
         style.put(mxConstants.STYLE_FILLCOLOR, "#B3E5FC");
         style.put(mxConstants.STYLE_FONTCOLOR, "#000000");
         stylesheet.putCellStyle(HIGHLIGHTED_NODE_STYLE, style);
 
-        style = new Hashtable<String, Object>();
+        style = new Hashtable<>();
         style.put(mxConstants.STYLE_STROKEWIDTH, 5);
         style.put(mxConstants.STYLE_STROKECOLOR, "#304FFE");
         style.put(mxConstants.STYLE_FILLCOLOR, "#388E3C");
         style.put(mxConstants.STYLE_FONTCOLOR, "#ffffff");
         stylesheet.putCellStyle(HIGHLIGHTED_GREEN_NODE_STYLE, style);
 
-        style = new Hashtable<String, Object>();
+        style = new Hashtable<>();
         style.put(mxConstants.STYLE_STROKEWIDTH, 5);
         style.put(mxConstants.STYLE_STROKECOLOR, "#304FFE");
         style.put(mxConstants.STYLE_FILLCOLOR, "#D32F2F");
         style.put(mxConstants.STYLE_FONTCOLOR, "#ffffff");
         stylesheet.putCellStyle(HIGHLIGHTED_RED_NODE_STYLE, style);
 
-        style = new Hashtable<String, Object>();
+        style = new Hashtable<>();
         style.put(mxConstants.STYLE_STROKEWIDTH, 3);
         style.put(mxConstants.STYLE_STROKECOLOR, "#FF80AB");
         style.put(mxConstants.STYLE_FONTCOLOR, "#000000");
         style.put(mxConstants.STYLE_FONTCOLOR, "#1565C0");
         stylesheet.putCellStyle(RELATED_EDGE_STYLE, style);
 
-        style = new Hashtable<String, Object>();
+        style = new Hashtable<>();
         style.put(mxConstants.STYLE_STROKEWIDTH, 3);
         style.put(mxConstants.STYLE_STROKECOLOR, "#8C9EFF");
         style.put(mxConstants.STYLE_FILLCOLOR, "#B3E5FC");
         style.put(mxConstants.STYLE_FONTCOLOR, "#000000");
         stylesheet.putCellStyle(RELATED_NODE_STYLE, style);
 
-        style = new Hashtable<String, Object>();
+        style = new Hashtable<>();
         style.put(mxConstants.STYLE_STROKEWIDTH, 3);
         style.put(mxConstants.STYLE_STROKECOLOR, "#8C9EFF");
         style.put(mxConstants.STYLE_FILLCOLOR, "#388E3C");
         style.put(mxConstants.STYLE_FONTCOLOR, "#ffffff");
         stylesheet.putCellStyle(RELATED_GREEN_NODE_STYLE, style);
 
-        style = new Hashtable<String, Object>();
+        style = new Hashtable<>();
         style.put(mxConstants.STYLE_STROKEWIDTH, 3);
         style.put(mxConstants.STYLE_STROKECOLOR, "#8C9EFF");
         style.put(mxConstants.STYLE_FILLCOLOR, "#D32F2F");
@@ -102,7 +102,6 @@ public class StyleConstants {
         stylesheet.putCellStyle(RELATED_RED_NODE_STYLE, style);
 
     }
-
 
 
 }

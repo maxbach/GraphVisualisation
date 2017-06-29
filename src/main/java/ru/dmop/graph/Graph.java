@@ -7,7 +7,7 @@ import ru.dmop.finderWays.WayInGraph;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
-import java.util.*;
+import java.util.TreeMap;
 
 import static ru.dmop.graph.StyleConstants.*;
 
@@ -122,9 +122,13 @@ public class Graph extends mxGraph {
         return numberOfNodes;
     }
 
-    public Integer getNumberOfEdges() { return numberOfEdges; }
+    public Integer getNumberOfEdges() {
+        return numberOfEdges;
+    }
 
-    public HashMap<String, Object> getNodesAndEdges (){ return nodesAndEdges; }
+    public HashMap<String, Object> getNodesAndEdges() {
+        return nodesAndEdges;
+    }
 
     public Integer getIdOfNode(Object object) {
         mxCell cell = (mxCell) object;
@@ -150,7 +154,7 @@ public class Graph extends mxGraph {
         int secondIndex = 1;
         Object help;
         int size = way.getWay().size();
-        while (size != secondIndex){
+        while (size != secondIndex) {
             help = this.getEdge(way.getWay().get(firstIndex), way.getWay().get(secondIndex));
             this.getModel().setStyle(help, HIGHLIGHTED_EDGE_STYLE);
             ++firstIndex;
@@ -158,8 +162,8 @@ public class Graph extends mxGraph {
         }
     }
 
-    public void writeGraph () {
-        Map <String, Object> treemap = new TreeMap<String, Object>(nodesAndEdges);
+    public void writeGraph() {
+        Map<String, Object> treemap = new TreeMap<String, Object>(nodesAndEdges);
 
     }
 
