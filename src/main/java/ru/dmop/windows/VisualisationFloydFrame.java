@@ -1,11 +1,18 @@
 package ru.dmop.windows;
 
 import com.mxgraph.swing.mxGraphComponent;
+import ru.dmop.Pair;
+import ru.dmop.finderWays.FloydFinder;
 import ru.dmop.finderWays.WayInGraph;
 import ru.dmop.graph.Graph;
 
 import javax.swing.*;
 import java.awt.*;
+import java.awt.event.MouseAdapter;
+import java.awt.event.MouseEvent;
+import java.util.ArrayList;
+
+import static ru.dmop.graph.StyleConstants.EDGE_STYLE;
 
 public class VisualisationFloydFrame extends JFrame {
     public VisualisationFloydFrame(Graph graph, WayInGraph way, String name) throws HeadlessException {
@@ -13,16 +20,44 @@ public class VisualisationFloydFrame extends JFrame {
         super(name);
         setDefaultCloseOperation(WindowConstants.DISPOSE_ON_CLOSE);
         JPanel panel = new JPanel();
-        graph.highLightThePath(way);
-        panel.add(new mxGraphComponent(graph));
-        panel.add(new JButton("Next"));
+        visualisationMatrix(graph);
+        visualisationWay(graph, way, panel);
         setContentPane(panel);
         pack();
         setVisible(true);
         setLocationRelativeTo(null);
-        JOptionPane.showMessageDialog(VisualisationFloydFrame.this,
-                "Длина пути:" + way.getWayLength(),
-                "Way length",
-                JOptionPane.INFORMATION_MESSAGE);
+    }
+
+    private void visualisationWay (final Graph graph, final WayInGraph way, JPanel panel){
+
+        panel.add(new mxGraphComponent(graph));
+        JButton nextButton = new JButton("Next");
+        nextButton.addMouseListener(new MouseAdapter() {
+            int i = 0;
+            @Override
+            public void mouseClicked(MouseEvent e) {
+                int size = way.getWay().size();
+                if (i < size-1){
+                    Object help = graph.getEdge(way.getWay().get(i), way.getWay().get(i+1));
+                    graph.getModel().setStyle(help, EDGE_STYLE);
+                    i++;
+                }
+                else{
+                    if (i == size-1){
+                        JOptionPane.showMessageDialog(VisualisationFloydFrame.this,
+                                "Путь найден. Длина пути - " + way.getWayLength(),
+                                "",
+                                JOptionPane.INFORMATION_MESSAGE);
+                        i++;
+                    }
+                }
+            }
+        });
+        panel.add(nextButton);
+
+    }
+
+    private void visualisationMatrix (Graph graph) {
+        new MatrixFrame(graph);
     }
 }

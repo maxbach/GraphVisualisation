@@ -1,15 +1,13 @@
 package ru.dmop.finderWays;
 
+import ru.dmop.Pair;
 import ru.dmop.graph.Graph;
+import ru.dmop.Triple;
 
+import javax.swing.table.AbstractTableModel;
 import java.util.ArrayList;
 
-public class FloydFinder implements BaseFinder {
-
-    class Pair {
-        int weight;
-        int help_vertex;
-    }
+public class FloydFinder extends AbstractTableModel implements BaseFinder  {
 
     private int size;
     private Pair[][] matrix;
@@ -23,25 +21,29 @@ public class FloydFinder implements BaseFinder {
 
     }
 
-    private void change_matrix() {
+    public void change_matrix(Triple triple) {
         int x;
-        for (int k = 0; k < size; ++k) {
-            for (int i = 0; i < size; ++i) {
-                for (int j = 0; j < size; ++j) {
-                    if ((k == i) || (k == j) || (i == j)
-                            || (matrix[i][k].weight == Integer.MAX_VALUE) || (matrix[k][j].weight == Integer.MAX_VALUE))
+
+        for (; triple.k < size; ++triple.k) {
+            for (; triple.i < size; ++triple.i) {
+                for (; triple.j < size - 1; ++triple.j) {
+                    if ((triple.k == triple.i) || (triple.k == triple.j) || (triple.i == triple.j)
+                            || (matrix[triple.i][triple.k].weight == Integer.MAX_VALUE) || (matrix[triple.k][triple.j].weight == Integer.MAX_VALUE))
                         continue;
 
-                    if (matrix[i][j].weight >= (matrix[i][k].weight + matrix[k][j].weight)) {
-                        x = matrix[i][k].weight + matrix[k][j].weight;
-                        matrix[i][j].weight = x;
-                        matrix[i][j].help_vertex = k;
+
+                    if (matrix[triple.i][triple.j].weight >= (matrix[triple.i][triple.k].weight + matrix[triple.k][triple.j].weight)) {
+                        x = matrix[triple.i][triple.k].weight + matrix[triple.k][triple.j].weight;
+                        matrix[triple.i][triple.j].weight = x;
+                        matrix[triple.i][triple.j].help_vertex = triple.k;
+                        return;
                     }
                 }
+                triple.j = 0;
             }
+            triple.i = 0;
         }
     }
-
 
     private void getShortestPathMain(int pointA, int pointB, ArrayList<Integer> way) {
 
@@ -55,6 +57,9 @@ public class FloydFinder implements BaseFinder {
     }
 
     public WayInGraph getShortestPath(int pointA, int pointB) {
+        Triple triple = new Triple();
+        for (; ((triple.i < size) && (triple.j < size) && (triple.k < size)); triple.j++)
+            change_matrix(triple);
         ArrayList<Integer> way = new ArrayList<Integer>();
         if (matrix[pointA][pointB].weight == Integer.MAX_VALUE) {
             return new WayInGraph(0);
@@ -96,7 +101,23 @@ public class FloydFinder implements BaseFinder {
                     matrix[i][j].weight = graph.getWeightOfEdge(i, j);
             }
         }
-        change_matrix();
+    }
+
+    public int getSize (){
+        return size;
+    }
+
+    public int getRowCount() {
+        return size;
+    }
+    public int getColumnCount() {
+        return size;
+    }
+    public Object getValueAt(int r, int c) {
+        if (matrix[r][c].weight == Integer.MAX_VALUE)
+            return new String("oo" + " , " + (char)(matrix[r][c].help_vertex + 'A'));
+        else
+            return new String(matrix[r][c].weight + " , " + (char)(matrix[r][c].help_vertex + 'A'));
     }
 
 }

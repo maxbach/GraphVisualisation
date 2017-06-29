@@ -6,10 +6,7 @@ import com.mxgraph.view.mxGraph;
 import com.mxgraph.view.mxStylesheet;
 import ru.dmop.finderWays.WayInGraph;
 
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.Hashtable;
-import java.util.Map;
+import java.util.*;
 
 import static ru.dmop.graph.StyleConstants.*;
 
@@ -66,7 +63,6 @@ public class Graph extends mxGraph {
 
                 }
             }
-
 
             // ищем все ребра
             for (Map.Entry<String, Object> entry : other.getNodesAndEdges().entrySet()) {
@@ -158,6 +154,11 @@ public class Graph extends mxGraph {
             ++firstIndex;
             ++secondIndex;
         }
+    }
+
+    public void writeGraph () {
+        Map <String, Object> treemap = new TreeMap<String, Object>(nodesAndEdges);
+
     }
 
     public void addStyles() {
