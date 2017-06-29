@@ -1,14 +1,11 @@
 package ru.dmop.graph;
 
 import com.mxgraph.model.mxCell;
-import com.mxgraph.util.mxConstants;
 import com.mxgraph.view.mxGraph;
-import com.mxgraph.view.mxStylesheet;
 import ru.dmop.finderWays.WayInGraph;
 
 import java.util.ArrayList;
 import java.util.HashMap;
-import java.util.Hashtable;
 import java.util.Map;
 
 import static ru.dmop.graph.StyleConstants.*;
@@ -49,7 +46,7 @@ public class Graph extends mxGraph {
                     int id = getIdOfNode(cell);
 
                     //вставляем вершину
-                    this.insertVertex(parent, id, cell.getValue(), cell.getGeometry().getX(),
+                    this.insertNode(parent, id, cell.getValue(), cell.getGeometry().getX(),
                             cell.getGeometry().getY(), cell.getGeometry().getWidth(), cell.getGeometry().getHeight());
 
                     // не забываем вернуть зеленый и красный стиль началу и концу пути
@@ -86,7 +83,7 @@ public class Graph extends mxGraph {
         }
     }
 
-    public Object insertVertex(Object parent, int id, Object value, double x, double y, double width, double height) {
+    public Object insertNode(Object parent, int id, Object value, double x, double y, double width, double height) {
         String ind = "node" + id;
         Object obj = super.insertVertex(parent, ind, value, x, y, width, height, DEFAULT_STYLE);
         nodesAndEdges.put(ind, obj);
@@ -96,13 +93,13 @@ public class Graph extends mxGraph {
 
     public Object insertEdge(Object parent, int pointA, int pointB, Integer value) {
         String ind = "edge" + pointA + "_" + pointB;
-        Object obj = super.insertEdge(parent, ind, value, getVertex(pointA), getVertex(pointB));
+        Object obj = super.insertEdge(parent, ind, value, getNode(pointA), getNode(pointB), DEFAULT_EDGE_STYLE);
         nodesAndEdges.put(ind, obj);
         numberOfEdges++;
         return obj;
     }
 
-    public Object getVertex(int id) {
+    public Object getNode(int id) {
         return nodesAndEdges.get("node" + id);
     }
 
@@ -154,37 +151,27 @@ public class Graph extends mxGraph {
         int size = way.getWay().size();
         while (size != secondIndex){
             help = this.getEdge(way.getWay().get(firstIndex), way.getWay().get(secondIndex));
-            this.getModel().setStyle(help, EDGE_STYLE);
+            this.getModel().setStyle(help, HIGHLIGHTED_EDGE_STYLE);
             ++firstIndex;
             ++secondIndex;
         }
     }
 
     public void addStyles() {
-        Hashtable<String, Object> style;
-        mxStylesheet stylesheet = this.getStylesheet();
+        StyleConstants.addStyles(this);
+    }
 
-        // custom vertex style
-        style = new Hashtable<String, Object>();
-        style.put(mxConstants.STYLE_FILLCOLOR, "#388E3C");
-        style.put(mxConstants.STYLE_FONTCOLOR, "#ffffff");
-        stylesheet.putCellStyle(GREEN_STYLE, style);
+    public ArrayList<mxCell> getNodes() {
+        ArrayList<mxCell> cells = new ArrayList<mxCell>();
+        for (int i = 0; i < numberOfNodes; i++) {
+            cells.add((mxCell) getNode(i));
+        }
 
-        style = new Hashtable<String, Object>();
-        style.put(mxConstants.STYLE_FILLCOLOR, "#D32F2F");
-        style.put(mxConstants.STYLE_FONTCOLOR, "#ffffff");
-        stylesheet.putCellStyle(RED_STYLE, style);
+        return cells;
+    }
 
-        style = new Hashtable<String, Object>();
-        style.put(mxConstants.STYLE_FILLCOLOR, "#B3E5FC");
-        style.put(mxConstants.STYLE_FONTCOLOR, "#000000");
-        stylesheet.putCellStyle(DEFAULT_STYLE, style);
-
-        style = new Hashtable<String, Object>();
-        style.put(mxConstants.STYLE_STROKEWIDTH, 5);
-        style.put(mxConstants.STYLE_STROKECOLOR, "#D32F2F");
-        stylesheet.putCellStyle(EDGE_STYLE, style);
-
+    public char getNameOfNode(int id) {
+        return (char) ('A' + id);
     }
 
 }

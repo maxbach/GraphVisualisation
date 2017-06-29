@@ -2,6 +2,7 @@ package ru.dmop.graph;
 
 import com.mxgraph.view.mxGraph;
 import ru.dmop.windows.ErrorFrame;
+
 import java.io.InputStream;
 import java.util.Scanner;
 
@@ -15,23 +16,6 @@ public class GraphBuilder {
     private static double centerX;
     private static double centerY;
 
-    public static mxGraph getGraph() {
-        mxGraph graph = new mxGraph();
-        Object parent = graph.getDefaultParent();
-
-        graph.getModel().beginUpdate();
-        try {
-            Object v1 = graph.insertVertex(parent, null, "Hello", 20, 20, 80,
-                    30);
-            Object v2 = graph.insertVertex(parent, null, "World!", 240, 150,
-                    80, 30);
-            graph.insertEdge(parent, null, "Edge", v1, v2);
-        } finally {
-            graph.getModel().endUpdate();
-        }
-
-        return graph;
-    }
 
     public static mxGraph getRandomGraph(int numberOfNodes, int density) {
         countConsts(numberOfNodes);
@@ -48,7 +32,7 @@ public class GraphBuilder {
         try {
 
             for (int i = 0; i < numberOfNodes; i++) {
-                graph.insertVertex(parent, i, (char) ('A' + i) + "", x, y, width, height);
+                graph.insertNode(parent, i, graph.getNameOfNode(i) + "", x, y, width, height);
                 conversion();
             }
 
@@ -65,7 +49,13 @@ public class GraphBuilder {
                             bools[p] = true;
                             int first = p / numberOfNodes;
                             int second = p % numberOfNodes;
-                            int weight = (int) ((Math.random()) * 10) + 1;
+                            int newP = second * numberOfNodes + first;
+                            int weight;
+                            if (bools[newP] && first != second) {
+                                weight = graph.getWeightOfEdge(second, first);
+                            } else {
+                                weight = (int) ((Math.random()) * 10) + 1;
+                            }
                             graph.insertEdge(parent, first, second, weight);
                             break;
                         }
@@ -86,7 +76,13 @@ public class GraphBuilder {
                     if (!bools[i]) {
                         int first = i / numberOfNodes;
                         int second = i % numberOfNodes;
-                        int weight = (int) ((Math.random()) * 10) + 1;
+                        int weight;
+                        int newP = second * numberOfNodes + first;
+                        if (!bools[newP] && first > second) {
+                            weight = graph.getWeightOfEdge(second, first);
+                        } else {
+                            weight = (int) ((Math.random()) * 10) + 1;
+                        }
                         graph.insertEdge(parent, first, second, weight);
                     }
                 }
@@ -114,15 +110,16 @@ public class GraphBuilder {
             countConsts(numberOfNodes);
 
             for (int i = 0; i < numberOfNodes; i++) {
-                if (graph.getVertex(i) == null){
-                    graph.insertVertex(parent, i, (char) ('A' + i) + "", x, y, width, height);
+                if (graph.getNode(i) == null) {
+                    graph.insertNode(parent, i, graph.getNameOfNode(i) + "", x, y, width, height);
                     conversion();
                 }
                 numberOfEdgesFromAGivenVertex = scanner.nextInt();
                 for (int j = 0; j < numberOfEdgesFromAGivenVertex; ++j){
                     indexOfSecondVertex = scanner.nextInt();
-                    if (graph.getVertex(indexOfSecondVertex) == null){
-                        graph.insertVertex(parent, indexOfSecondVertex, (char) ('A' + indexOfSecondVertex) + "", x, y, width, height);
+                    if (graph.getNode(indexOfSecondVertex) == null) {
+                        graph.insertNode(parent, indexOfSecondVertex, graph.getNameOfNode(indexOfSecondVertex)
+                                + "", x, y, width, height);
                         conversion();
                     }
                     edgeWeight = scanner.nextInt();
@@ -145,7 +142,7 @@ public class GraphBuilder {
     }
 
     private static void countConsts(int numberOfNodes) {
-        double radius = width + numberOfNodes * 10;
+        double radius = width + numberOfNodes * 10 + 20;
         centerX = radius + 10;
         centerY = radius + 10;
         double angle = 2 * Math.PI / numberOfNodes;

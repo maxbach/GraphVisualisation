@@ -20,11 +20,13 @@ public class RandomFrame extends JFrame {
         setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
         Box mainBox = Box.createVerticalBox();
 
+        mainBox.add(Box.createVerticalStrut(10));
         mainBox.add(getBoxOfChosingNumber());
         mainBox.add(Box.createVerticalStrut(10));
         mainBox.add(getBoxOfChosingDensity());
         mainBox.add(Box.createVerticalStrut(10));
         mainBox.add(getButton());
+        mainBox.add(Box.createVerticalStrut(10));
         setContentPane(mainBox);
         pack();
         setVisible(true);

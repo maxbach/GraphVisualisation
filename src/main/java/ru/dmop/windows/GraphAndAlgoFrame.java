@@ -88,20 +88,22 @@ public class GraphAndAlgoFrame extends JFrame {
                 if (obj1 != null && obj2 != null) {
                     Graph graph = (Graph) graphComponent.getGraph();
                     Graph helpGraph = new Graph(graph);
-                    DejkstraFinder finder = new DejkstraFinder(helpGraph);
-
                     int id1 = graph.getIdOfNode(obj1);
                     int id2 = graph.getIdOfNode(obj2);
 
-                    WayInGraph way = finder.getShortestPath(id1, id2);
-                    if (way != null && way.isOk()) {
-                        new VisualisationDejkstraFrame(helpGraph, way, name, finder);
-                    } else {
-                        JOptionPane.showMessageDialog(GraphAndAlgoFrame.this,
-                                "Нет пути между двумя вершинами",
-                                "Find way error",
-                                JOptionPane.ERROR_MESSAGE);
-                    }
+                    DejkstraFinder finder = new DejkstraFinder(helpGraph, id1, id2);
+                    new VisualisationDejkstraFrame(finder);
+
+
+//                    WayInGraph way = finder.getShortestPath(id1, id2);
+//                    if (way != null && way.isOk()) {
+//                        new VisualisationDejkstraFrame(helpGraph, way, name, finder);
+//                    } else {
+//                        JOptionPane.showMessageDialog(GraphAndAlgoFrame.this,
+//                                "Нет пути между двумя вершинами",
+//                                "Find way error",
+//                                JOptionPane.ERROR_MESSAGE);
+//                    }
 
                     clear();
                 }
@@ -167,8 +169,8 @@ public class GraphAndAlgoFrame extends JFrame {
             }
         } else {
             setDefault(node1);
-            setGreen(obj);
             setDefault(node2);
+            setGreen(obj);
             node1 = obj;
             node2 = null;
         }
