@@ -9,7 +9,7 @@ import java.awt.*;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 
-import static ru.dmop.graph.StyleConstants.DEFAULT_EDGE_STYLE;
+import static ru.dmop.graph.StyleConstants.HIGHLIGHTED_EDGE_STYLE;
 
 public class VisualisationFloydFrame extends JFrame {
     public VisualisationFloydFrame(Graph graph, WayInGraph way, String name) throws HeadlessException {
@@ -37,7 +37,7 @@ public class VisualisationFloydFrame extends JFrame {
                 int size = way.getWay().size();
                 if (i < size - 1) {
                     Object help = graph.getEdge(way.getWay().get(i), way.getWay().get(i + 1));
-                    graph.getModel().setStyle(help, DEFAULT_EDGE_STYLE);
+                    graph.getModel().setStyle(help, HIGHLIGHTED_EDGE_STYLE);
                     i++;
                 } else {
                     if (i == size - 1) {

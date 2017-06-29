@@ -9,11 +9,14 @@ public class StyleConstants {
     public static final String RED_STYLE = "Red";
     public static final String GREEN_STYLE = "Green";
     public static final String DEFAULT_STYLE = "Default";
+
     public static final String HIGHLIGHTED_EDGE_STYLE = "Edge";
     public static final String DEFAULT_EDGE_STYLE = "Edge_Default";
+
     public static final String HIGHLIGHTED_NODE_STYLE = "HighNode";
     public static final String HIGHLIGHTED_GREEN_NODE_STYLE = "HighGreen";
     public static final String HIGHLIGHTED_RED_NODE_STYLE = "HighRed";
+
     public static final String RELATED_EDGE_STYLE = "RelateEdge";
     public static final String RELATED_NODE_STYLE = "RelateNode";
     public static final String RELATED_GREEN_NODE_STYLE = "RelateGreen";

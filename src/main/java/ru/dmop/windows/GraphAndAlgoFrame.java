@@ -110,10 +110,7 @@ public class GraphAndAlgoFrame extends JFrame {
 
     private JButton getFloydButton() {
         final String name = "Алгоритм Флойда";
-        FloydFinder finder;
-
         JButton button = new JButton(name);
-
         button.addMouseListener(new MouseAdapter() {
 
             @Override
