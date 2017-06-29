@@ -1,5 +1,6 @@
 package ru.dmop.windows;
 
+import com.mxgraph.view.mxGraph;
 import ru.dmop.graph.GraphBuilder;
 
 import javax.swing.*;
@@ -38,7 +39,6 @@ public class StartFrame extends JFrame {
                 JFileChooser fileopen = new JFileChooser();
                 int ret = fileopen.showDialog(null, "Открыть файл");
                 if (ret == JFileChooser.APPROVE_OPTION) {
-                    //InputOutputStream io = new InputOutputStream (fileopen.getSelectedFile());
                     InputStream inputStream = null;
                     try {
                         inputStream = new FileInputStream(fileopen.getSelectedFile());
@@ -46,11 +46,11 @@ public class StartFrame extends JFrame {
                         e1.printStackTrace();
                     }
                     setVisible(false);
-//                    try {
-//                        new GraphAndAlgoFrame(GraphBuilder.getGraphFromFile(inputStream));
-//                    } catch (IOException e1) {
-//                        e1.printStackTrace();
-//                    }
+                    Object graph = GraphBuilder.getGraphFromFile(inputStream);
+                    if (graph != null)
+                        new GraphAndAlgoFrame((mxGraph)graph);
+                    else
+                        setVisible(true);
                 }
             }
         });
