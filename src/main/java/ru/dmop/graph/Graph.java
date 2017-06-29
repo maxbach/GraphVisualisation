@@ -7,6 +7,7 @@ import ru.dmop.finderWays.WayInGraph;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
+import java.util.*;
 
 import static ru.dmop.graph.StyleConstants.*;
 
@@ -155,6 +156,11 @@ public class Graph extends mxGraph {
             ++firstIndex;
             ++secondIndex;
         }
+    }
+
+    public void writeGraph () {
+        Map <String, Object> treemap = new TreeMap<String, Object>(nodesAndEdges);
+
     }
 
     public void addStyles() {
