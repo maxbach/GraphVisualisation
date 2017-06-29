@@ -1,12 +1,9 @@
 package ru.dmop.graph;
 
-import com.mxgraph.util.mxConstants;
 import com.mxgraph.view.mxGraph;
-import com.mxgraph.view.mxStylesheet;
-
-import java.util.Hashtable;
-
-import static ru.dmop.graph.StyleConstants.*;
+import ru.dmop.windows.ErrorFrame;
+import java.io.InputStream;
+import java.util.Scanner;
 
 public class GraphBuilder {
 
@@ -52,10 +49,7 @@ public class GraphBuilder {
 
             for (int i = 0; i < numberOfNodes; i++) {
                 graph.insertVertex(parent, i, (char) ('A' + i) + "", x, y, width, height);
-                double tempX = centerX + (x - centerX) * cos - (y - centerY) * sin;
-                double tempY = centerY + (y - centerY) * cos + (x - centerX) * sin;
-                x = tempX;
-                y = tempY;
+                conversion();
             }
 
             Boolean[] bools = new Boolean[maxEdges];
@@ -106,6 +100,50 @@ public class GraphBuilder {
         return graph;
     }
 
+    public static Graph getGraphFromFile(InputStream stream){
+        int numberOfEdgesFromAGivenVertex, indexOfSecondVertex, edgeWeight;
+
+        Graph graph = new Graph();
+        Object parent = graph.getDefaultParent();
+        graph.addStyles();
+        graph.getModel().beginUpdate();
+
+        try {
+            Scanner scanner = new Scanner(stream);
+            int numberOfNodes = scanner.nextInt();
+            countConsts(numberOfNodes);
+
+            for (int i = 0; i < numberOfNodes; i++) {
+                if (graph.getVertex(i) == null){
+                    graph.insertVertex(parent, i, (char) ('A' + i) + "", x, y, width, height);
+                    conversion();
+                }
+                numberOfEdgesFromAGivenVertex = scanner.nextInt();
+                for (int j = 0; j < numberOfEdgesFromAGivenVertex; ++j){
+                    indexOfSecondVertex = scanner.nextInt();
+                    if (graph.getVertex(indexOfSecondVertex) == null){
+                        graph.insertVertex(parent, indexOfSecondVertex, (char) ('A' + indexOfSecondVertex) + "", x, y, width, height);
+                        conversion();
+                    }
+                    edgeWeight = scanner.nextInt();
+                    if (edgeWeight < 0){
+                        new ErrorFrame("Некорректный формат входных данных", "Ошибка ввода графа");
+                        return null;
+                    }
+                    graph.insertEdge(parent, i, indexOfSecondVertex, edgeWeight);
+                }
+            }
+        } catch (Exception el){
+            new ErrorFrame("Некорректный формат входных данных", "Ошибка ввода графа");
+            return null;
+        }
+        finally {
+            graph.getModel().endUpdate();
+        }
+
+        return graph;
+    }
+
     private static void countConsts(int numberOfNodes) {
         double radius = width + numberOfNodes * 10;
         centerX = radius + 10;
@@ -115,34 +153,13 @@ public class GraphBuilder {
         cos = Math.cos(angle);
         x = centerX;
         y = 10;
-
     }
 
-    private static void addStyles(Graph graph) {
-        Hashtable<String, Object> style;
-        mxStylesheet stylesheet = graph.getStylesheet();
-
-        // custom vertex style
-        style = new Hashtable<String, Object>();
-        style.put(mxConstants.STYLE_FILLCOLOR, "#388E3C");
-        style.put(mxConstants.STYLE_FONTCOLOR, "#ffffff");
-        stylesheet.putCellStyle(GREEN_STYLE, style);
-
-        style = new Hashtable<String, Object>();
-        style.put(mxConstants.STYLE_FILLCOLOR, "#D32F2F");
-        style.put(mxConstants.STYLE_FONTCOLOR, "#ffffff");
-        stylesheet.putCellStyle(RED_STYLE, style);
-
-        style = new Hashtable<String, Object>();
-        style.put(mxConstants.STYLE_FILLCOLOR, "#B3E5FC");
-        style.put(mxConstants.STYLE_FONTCOLOR, "#000000");
-        stylesheet.putCellStyle(DEFAULT_STYLE, style);
-
-        style = new Hashtable<String, Object>();
-        style.put(mxConstants.STYLE_STROKEWIDTH, 5);
-        style.put(mxConstants.STYLE_STROKECOLOR, "#D32F2F");
-        stylesheet.putCellStyle(EDGE_STYLE, style);
+    private static void conversion () {
+        double tempX = centerX + (x - centerX) * cos - (y - centerY) * sin;
+        double tempY = centerY + (y - centerY) * cos + (x - centerX) * sin;
+        x = tempX;
+        y = tempY;
     }
-
-
 }
+
