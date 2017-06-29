@@ -12,6 +12,10 @@ public class DejkstraFinder implements BaseFinder {
     private Integer[] ways;
     private Graph graph;
 
+    private Integer currentNode = -1;
+    private Integer currentRelatedNode = -1;
+    private ArrayList<Integer> relatedNodes;
+
     public DejkstraFinder() {
     }
 
@@ -24,6 +28,10 @@ public class DejkstraFinder implements BaseFinder {
         isAlso = new Boolean[graph.getNumberOfNodes()];
         prev = new Integer[graph.getNumberOfNodes()];
         ways = new Integer[graph.getNumberOfNodes()];
+    }
+
+    public void doNextStep() {
+
     }
 
     private void relax(int pointA, int pointB) {

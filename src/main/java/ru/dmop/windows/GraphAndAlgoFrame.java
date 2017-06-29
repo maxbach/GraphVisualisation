@@ -2,7 +2,9 @@ package ru.dmop.windows;
 
 import com.mxgraph.swing.mxGraphComponent;
 import com.mxgraph.view.mxGraph;
-import ru.dmop.finderWays.*;
+import ru.dmop.finderWays.DejkstraFinder;
+import ru.dmop.finderWays.FloydFinder;
+import ru.dmop.finderWays.WayInGraph;
 import ru.dmop.graph.Graph;
 import ru.dmop.graph.GraphBuilder;
 
@@ -59,30 +61,20 @@ public class GraphAndAlgoFrame extends JFrame {
 
     private Box getButtons() {
         Box box = Box.createVerticalBox();
-        box.add(getAlgoButton(AlgorithmConstant.DEJKSTRA));
+        box.add(getDejkstraButton());
         box.add(Box.createVerticalStrut(10));
 
         Graph graph = (Graph) graphComponent.getGraph();
         if (graph.getNumberOfNodes() <= 25) {
-            box.add(getAlgoButton(AlgorithmConstant.FLOYD));
+            box.add(getFloydButton());
             box.add(Box.createVerticalStrut(10));
         }
         box.setAlignmentY(JComponent.CENTER_ALIGNMENT);
         return box;
     }
 
-
-    private JButton getAlgoButton(AlgorithmConstant algorithmConstant) {
-        final String name;
-        final BaseFinder finder;
-
-        if (algorithmConstant == AlgorithmConstant.DEJKSTRA) {
-            name = "Алгоритм Дейкстра";
-            finder = new DejkstraFinder();
-        } else {
-            name = "Алгоритм Флойда";
-            finder = new FloydFinder();
-        }
+    private JButton getDejkstraButton() {
+        final String name = "Алгоритм Дейкстра";
 
         JButton button = new JButton(name);
 
@@ -94,32 +86,75 @@ public class GraphAndAlgoFrame extends JFrame {
                 Object obj2 = GraphAndAlgoFrame.this.node2;
 
                 if (obj1 != null && obj2 != null) {
-
                     Graph graph = (Graph) graphComponent.getGraph();
                     Graph helpGraph = new Graph(graph);
-                    finder.setGraph(helpGraph);
+                    DejkstraFinder finder = new DejkstraFinder(helpGraph);
+
                     int id1 = graph.getIdOfNode(obj1);
                     int id2 = graph.getIdOfNode(obj2);
+
                     WayInGraph way = finder.getShortestPath(id1, id2);
                     if (way != null && way.isOk()) {
-                        new VisualizationFrame(helpGraph, way, name);
+                        new VisualisationDejkstraFrame(helpGraph, way, name, finder);
                     } else {
                         JOptionPane.showMessageDialog(GraphAndAlgoFrame.this,
                                 "Нет пути между двумя вершинами",
                                 "Find way error",
                                 JOptionPane.ERROR_MESSAGE);
                     }
-                    clear();
 
+                    clear();
                 }
 
 
             }
         });
+
         return button;
-
-
     }
+
+    private JButton getFloydButton() {
+        final String name = "Алгоритм Флойда";
+        FloydFinder finder;
+
+        JButton button = new JButton(name);
+
+        button.addMouseListener(new MouseAdapter() {
+
+            @Override
+            public void mouseClicked(MouseEvent e) {
+                Object obj1 = GraphAndAlgoFrame.this.node1;
+                Object obj2 = GraphAndAlgoFrame.this.node2;
+
+                if (obj1 != null && obj2 != null) {
+                    Graph graph = (Graph) graphComponent.getGraph();
+                    Graph helpGraph = new Graph(graph);
+                    FloydFinder finder = new FloydFinder(helpGraph);
+
+
+                    int id1 = graph.getIdOfNode(obj1);
+                    int id2 = graph.getIdOfNode(obj2);
+
+                    WayInGraph way = finder.getShortestPath(id1, id2);
+                    if (way != null && way.isOk()) {
+                        new VisualisationFloydFrame(helpGraph, way, name);
+                    } else {
+                        JOptionPane.showMessageDialog(GraphAndAlgoFrame.this,
+                                "Нет пути между двумя вершинами",
+                                "Find way error",
+                                JOptionPane.ERROR_MESSAGE);
+                    }
+
+                    clear();
+                }
+
+
+            }
+        });
+
+        return button;
+    }
+
 
     private void manageVertex(Object obj) {
         if (node1 == null) {

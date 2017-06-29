@@ -7,13 +7,8 @@ import ru.dmop.graph.Graph;
 import javax.swing.*;
 import java.awt.*;
 
-import static ru.dmop.graph.StyleConstants.EDGE_STYLE;
-
-/**
- * // Экран, на котором будет визуализация алгоритма
- */
-public class VisualizationFrame extends JFrame {
-    public VisualizationFrame(Graph graph, WayInGraph way, String name) throws HeadlessException {
+public class VisualisationFloydFrame extends JFrame {
+    public VisualisationFloydFrame(Graph graph, WayInGraph way, String name) throws HeadlessException {
 
         super(name);
         setDefaultCloseOperation(WindowConstants.DISPOSE_ON_CLOSE);
@@ -25,7 +20,7 @@ public class VisualizationFrame extends JFrame {
         pack();
         setVisible(true);
         setLocationRelativeTo(null);
-        JOptionPane.showMessageDialog(VisualizationFrame.this,
+        JOptionPane.showMessageDialog(VisualisationFloydFrame.this,
                 "Длина пути:" + way.getWayLength(),
                 "Way length",
                 JOptionPane.INFORMATION_MESSAGE);
