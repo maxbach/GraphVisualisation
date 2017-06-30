@@ -21,7 +21,9 @@ public class FloydGraphFrame extends JFrame {
         super("Алгоритм Флойда. Построение пути");
         setDefaultCloseOperation(WindowConstants.DISPOSE_ON_CLOSE);
         JPanel panel = new JPanel();
-        visualisationWay(graph, way, panel);
+        //visualisationWay(graph, way, panel);
+        graph.highLightThePath(way);
+        panel.add(new mxGraphComponent(graph));
         setContentPane(panel);
         pack();
         setVisible(true);

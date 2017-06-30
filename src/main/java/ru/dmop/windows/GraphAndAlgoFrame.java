@@ -70,9 +70,6 @@ public class GraphAndAlgoFrame extends JFrame {
             box.add(Box.createVerticalStrut(10));
         }
 
-        box.add(getWriteGraphButton());
-        box.add(Box.createVerticalStrut(10));
-
         box.setAlignmentY(JComponent.CENTER_ALIGNMENT);
         return box;
     }
@@ -141,30 +138,6 @@ public class GraphAndAlgoFrame extends JFrame {
                 }
 
 
-            }
-        });
-
-        return button;
-    }
-
-    private JButton getWriteGraphButton() {
-        final String name = "Записать граф в файл";
-
-        JButton button = new JButton(name);
-        /*button.addMouseListener(new MouseAdapter() {
-            @Override
-            public void mouseClicked(MouseEvent e) {
-                Graph graph = (Graph) graphComponent.getGraph();
-                graph.writeGraph();
-                JOptionPane.showMessageDialog(GraphAndAlgoFrame.this,
-                        "Граф записан в файл",
-                        "",
-                        JOptionPane.INFORMATION_MESSAGE);
-            }
-        });*/
-        button.addMouseListener(new MouseAdapter() {
-            @Override
-            public void mouseClicked(MouseEvent e) {
             }
         });
 
