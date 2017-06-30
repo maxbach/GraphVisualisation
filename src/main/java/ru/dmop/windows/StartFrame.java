@@ -25,7 +25,7 @@ public class StartFrame extends JFrame {
             @Override
             public void mouseClicked(MouseEvent e) {
                 setVisible(false);
-                new RandomFrame();
+                new RandomFrame(isFirst);
             }
         });
         randomGraph.setAlignmentX(JComponent.CENTER_ALIGNMENT);
@@ -51,7 +51,7 @@ public class StartFrame extends JFrame {
                     setVisible(false);
                     Object graph = GraphBuilder.getGraphFromFile(inputStream);
                     if (graph != null)
-                        new GraphAndAlgoFrame((mxGraph) graph);
+                        new GraphAndAlgoFrame((mxGraph) graph, isFirst);
                     else
                         setVisible(true);
                 }

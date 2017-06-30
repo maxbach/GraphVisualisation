@@ -15,9 +15,8 @@ public class RandomFrame extends JFrame {
     JTextField field;
     JSlider slider;
 
-    public RandomFrame() throws HeadlessException {
+    public RandomFrame(boolean isFirst) throws HeadlessException {
         super("Построить рандомное дерево");
-        setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
         Box mainBox = Box.createVerticalBox();
 
         mainBox.add(Box.createVerticalStrut(10));
@@ -25,12 +24,19 @@ public class RandomFrame extends JFrame {
         mainBox.add(Box.createVerticalStrut(10));
         mainBox.add(getBoxOfChosingDensity());
         mainBox.add(Box.createVerticalStrut(10));
-        mainBox.add(getButton());
+        mainBox.add(getButton(isFirst));
         mainBox.add(Box.createVerticalStrut(10));
         setContentPane(mainBox);
         pack();
         setVisible(true);
         setLocationRelativeTo(null);
+
+        if (isFirst) {
+            setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
+        } else {
+            setDefaultCloseOperation(WindowConstants.DISPOSE_ON_CLOSE);
+
+        }
     }
 
     private Box getBoxOfChosingNumber() {
@@ -77,7 +83,7 @@ public class RandomFrame extends JFrame {
 
     }
 
-    private JButton getButton() {
+    private JButton getButton(boolean isFirst) {
         JButton button = new JButton("Построить рандомное дерево");
         button.addMouseListener(new MouseAdapter() {
 
@@ -87,7 +93,7 @@ public class RandomFrame extends JFrame {
                 String textOfField = field.getText();
                 if (textOfField != null && !textOfField.isEmpty()) {
                     setVisible(false);
-                    new GraphAndAlgoFrame(Integer.parseInt(textOfField), slider.getValue());
+                    new GraphAndAlgoFrame(Integer.parseInt(textOfField), slider.getValue(), isFirst);
                 }
 
             }

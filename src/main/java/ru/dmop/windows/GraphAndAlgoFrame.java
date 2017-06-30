@@ -28,9 +28,16 @@ public class GraphAndAlgoFrame extends JFrame {
     private Object node1 = null;
     private Object node2 = null;
 
-    public GraphAndAlgoFrame(final mxGraph graph) throws HeadlessException {
+    public GraphAndAlgoFrame(final mxGraph graph, boolean isFirst) throws HeadlessException {
         super("Выбор вершины и алгоритма");
-        setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
+
+        if (isFirst) {
+            setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
+        } else {
+            setDefaultCloseOperation(WindowConstants.DISPOSE_ON_CLOSE);
+
+        }
+
 
         JMenuBar menuBar = new JMenuBar();
 
@@ -71,8 +78,8 @@ public class GraphAndAlgoFrame extends JFrame {
 
     }
 
-    public GraphAndAlgoFrame(int numberOfNodes, int density) {
-        this(GraphBuilder.getRandomGraph(numberOfNodes, density));
+    public GraphAndAlgoFrame(int numberOfNodes, int density, boolean isFirst) {
+        this(GraphBuilder.getRandomGraph(numberOfNodes, density), isFirst);
 
     }
 
