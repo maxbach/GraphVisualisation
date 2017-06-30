@@ -1,6 +1,9 @@
 package ru.dmop.windows;
 
+
 import com.mxgraph.swing.mxGraphComponent;
+import ru.dmop.finderWays.FloydFinder;
+import ru.dmop.finderWays.Triple;
 import ru.dmop.finderWays.WayInGraph;
 import ru.dmop.graph.Graph;
 
@@ -9,52 +12,79 @@ import java.awt.*;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 
-import static ru.dmop.graph.StyleConstants.HIGHLIGHTED_EDGE_STYLE;
 
 public class VisualisationFloydFrame extends JFrame {
-    public VisualisationFloydFrame(Graph graph, WayInGraph way, String name) throws HeadlessException {
 
-        super(name);
+    private Box graphPictureAndLength;
+
+    public VisualisationFloydFrame(Graph graph, WayInGraph way) throws HeadlessException {
+
+        super("Алгоритм Флойда. Обработка матрицы");
         setDefaultCloseOperation(WindowConstants.DISPOSE_ON_CLOSE);
-        JPanel panel = new JPanel();
-        visualisationMatrix(graph);
-        visualisationWay(graph, way, panel);
-        setContentPane(panel);
+
+        FloydFinder finder = new FloydFinder(graph);
+        JTable table = new JTable(finder);
+        Box box = Box.createHorizontalBox();
+
+        box.add(getRows(graph.getNumberOfNodes()));
+
+        JScrollPane pane = new JScrollPane(table);
+        pane.setAlignmentY(TOP_ALIGNMENT);
+        box.add(pane);
+
+        graph.highLightThePath(way);
+        graphPictureAndLength = Box.createVerticalBox();
+        mxGraphComponent graphComponent = new mxGraphComponent(graph);
+        graphPictureAndLength.add(graphComponent);
+        Label label = new Label ("Длина пути - " + "\"" +way.getWayLength() + "\"");
+        label.setAlignment(Label.CENTER);
+        graphPictureAndLength.add(label);
+        graphPictureAndLength.setAlignmentY(TOP_ALIGNMENT);
+        graphPictureAndLength.setVisible(false);
+        box.add(graphPictureAndLength);
+
+        JButton nextButton = getNextButton(finder);
+        nextButton.setAlignmentY(Component.TOP_ALIGNMENT);
+        box.add(nextButton);
+
+        setContentPane(box);
         pack();
         setVisible(true);
-        setLocationRelativeTo(null);
     }
 
-    private void visualisationWay(final Graph graph, final WayInGraph way, JPanel panel) {
-
-        panel.add(new mxGraphComponent(graph));
+    private JButton getNextButton(final FloydFinder finder) {
         JButton nextButton = new JButton("Next");
         nextButton.addMouseListener(new MouseAdapter() {
-            int i = 0;
+            Triple triple = new Triple();
 
-            @Override
             public void mouseClicked(MouseEvent e) {
-                int size = way.getWay().size();
-                if (i < size - 1) {
-                    Object help = graph.getEdge(way.getWay().get(i), way.getWay().get(i + 1));
-                    graph.getModel().setStyle(help, HIGHLIGHTED_EDGE_STYLE);
-                    i++;
+                if (((triple.i < finder.getSize()) && (triple.j < finder.getSize()) && (triple.k < finder.getSize()))) {
+                    finder.change_matrix(triple);
+                    finder.fireTableDataChanged();
+                    triple.j++;
                 } else {
-                    if (i == size - 1) {
-                        JOptionPane.showMessageDialog(VisualisationFloydFrame.this,
-                                "Путь найден. Длина пути - " + way.getWayLength(),
-                                "",
-                                JOptionPane.INFORMATION_MESSAGE);
-                        i++;
-                    }
+                    JOptionPane.showMessageDialog(VisualisationFloydFrame.this,
+                            "Обработка матрицы закончена",
+                            "",
+                            JOptionPane.INFORMATION_MESSAGE);
+                    nextButton.setVisible(false);
+                    graphPictureAndLength.setVisible(true);
                 }
+
             }
         });
-        panel.add(nextButton);
-
+        return nextButton;
     }
 
-    private void visualisationMatrix(Graph graph) {
-        new MatrixFrame(graph);
+    private Box getRows(int size) {
+        Box rows = Box.createVerticalBox();
+        rows.setAlignmentY(TOP_ALIGNMENT);
+        JLabel label;
+        rows.add(new JLabel(" "));
+        for (int i = 0; i < size; ++i) {
+            label = new JLabel((char) (i + 'A') + "");
+            rows.add(label);
+        }
+        return rows;
     }
 }
