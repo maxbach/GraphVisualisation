@@ -14,7 +14,8 @@ import java.io.InputStream;
  * Стартовый экран
  */
 public class StartFrame extends JFrame {
-    public StartFrame() {
+
+    public StartFrame(boolean isFirst) {
         super("Поиск кратчайших путей в графе");
         Box box = Box.createVerticalBox();
         box.add(Box.createVerticalStrut(20));
@@ -60,7 +61,12 @@ public class StartFrame extends JFrame {
         box.add(Box.createVerticalStrut(20));
 
         setContentPane(box);
-        setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
+        if (isFirst) {
+            setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
+        } else {
+            setDefaultCloseOperation(WindowConstants.DISPOSE_ON_CLOSE);
+
+        }
         pack();
         setVisible(true);
         setLocationRelativeTo(null);

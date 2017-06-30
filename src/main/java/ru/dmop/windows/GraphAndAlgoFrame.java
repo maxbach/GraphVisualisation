@@ -10,6 +10,8 @@ import ru.dmop.graph.GraphBuilder;
 
 import javax.swing.*;
 import java.awt.*;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 
@@ -29,6 +31,20 @@ public class GraphAndAlgoFrame extends JFrame {
     public GraphAndAlgoFrame(final mxGraph graph) throws HeadlessException {
         super("Выбор вершины и алгоритма");
         setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
+
+        JMenuBar menuBar = new JMenuBar();
+
+        JMenuItem newGraphItem = new JMenuItem("New Graph");
+        menuBar.add(newGraphItem);
+
+        newGraphItem.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                new StartFrame(false);
+            }
+        });
+
+
         Box mainBox = Box.createHorizontalBox();
         graphComponent = new mxGraphComponent(graph);
         mainBox.add(graphComponent);
@@ -47,6 +63,7 @@ public class GraphAndAlgoFrame extends JFrame {
         mainBox.add(Box.createHorizontalStrut(10));
         mainBox.add(getButtons());
         setContentPane(mainBox);
+        this.setJMenuBar(menuBar);
         pack();
         setVisible(true);
         setLocationRelativeTo(null);
