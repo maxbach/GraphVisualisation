@@ -56,9 +56,5 @@ public class FloydGraphFrame extends JFrame {
             }
         });
         panel.add(nextButton);
-
     }
-
-
-
 }

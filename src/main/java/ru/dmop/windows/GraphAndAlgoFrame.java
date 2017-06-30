@@ -114,6 +114,12 @@ public class GraphAndAlgoFrame extends JFrame {
 
                     clear();
                 }
+                else{
+                    JOptionPane.showMessageDialog(GraphAndAlgoFrame.this,
+                            "Выберите начальную и конечную вершины",
+                            "",
+                            JOptionPane.INFORMATION_MESSAGE);
+                }
 
 
             }
@@ -150,8 +156,13 @@ public class GraphAndAlgoFrame extends JFrame {
                                 "Find way error",
                                 JOptionPane.ERROR_MESSAGE);
                     }
-
                     clear();
+                }
+                else{
+                    JOptionPane.showMessageDialog(GraphAndAlgoFrame.this,
+                            "Выберите начальную и конечную вершины",
+                            "",
+                            JOptionPane.INFORMATION_MESSAGE);
                 }
 
 

@@ -162,10 +162,6 @@ public class Graph extends mxGraph {
         }
     }
 
-    public void writeGraph() {
-        Map<String, Object> treemap = new TreeMap<String, Object>(nodesAndEdges);
-
-    }
 
     public void addStyles() {
         StyleConstants.addStyles(this);

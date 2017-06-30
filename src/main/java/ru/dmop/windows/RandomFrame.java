@@ -8,7 +8,7 @@ import java.awt.event.MouseEvent;
 import java.text.NumberFormat;
 
 /**
- * Экран, на котором будут вводится параметры для рандомного создания графа
+ * Экран, на котором будут вводится параметры для создания случайного графа
  */
 
 public class RandomFrame extends JFrame {
@@ -16,7 +16,7 @@ public class RandomFrame extends JFrame {
     JSlider slider;
 
     public RandomFrame() throws HeadlessException {
-        super("Построить рандомное дерево");
+        super("Построить случайное дерево");
         setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
         Box mainBox = Box.createVerticalBox();
 
@@ -78,7 +78,7 @@ public class RandomFrame extends JFrame {
     }
 
     private JButton getButton() {
-        JButton button = new JButton("Построить рандомное дерево");
+        JButton button = new JButton("Построить случайное дерево");
         button.addMouseListener(new MouseAdapter() {
 
             @Override
