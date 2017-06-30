@@ -1,11 +1,9 @@
 package ru.dmop.windows;
 
 import javax.swing.*;
-import javax.swing.text.NumberFormatter;
 import java.awt.*;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
-import java.text.NumberFormat;
 
 /**
  * Экран, на котором будут вводится параметры для рандомного создания графа
@@ -46,15 +44,8 @@ public class RandomFrame extends JFrame {
         box.add(Box.createHorizontalStrut(10));
 
 
-        // настраиваем текстовую панель, чтобы ввод был только цифрами
-        NumberFormat format = NumberFormat.getInstance();
-        NumberFormatter formatter = new NumberFormatter(format);
-        formatter.setValueClass(Integer.class);
-        formatter.setMinimum(1);
-        formatter.setMaximum(Integer.MAX_VALUE);
-        formatter.setAllowsInvalid(false);
-        formatter.setCommitsOnValidEdit(true);
-        field = new JFormattedTextField(formatter);
+        field = new NumberTextField();
+
 
 
         box.add(field);
@@ -91,7 +82,7 @@ public class RandomFrame extends JFrame {
             public void mouseClicked(MouseEvent e) {
                 // открываем новое окно
                 String textOfField = field.getText();
-                if (textOfField != null && !textOfField.isEmpty()) {
+                if (textOfField != null && !textOfField.isEmpty() && !textOfField.equals("0")) {
                     setVisible(false);
                     new GraphAndAlgoFrame(Integer.parseInt(textOfField), slider.getValue(), isFirst);
                 }
