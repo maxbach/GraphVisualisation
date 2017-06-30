@@ -19,7 +19,7 @@ public class VisualisationFloydFrame extends JFrame {
 
     public VisualisationFloydFrame(Graph graph, WayInGraph way) throws HeadlessException {
 
-        super("Алгоритм Флойда. Обработка матрицы");
+        super("Алгоритм Флойда");
         setDefaultCloseOperation(WindowConstants.DISPOSE_ON_CLOSE);
 
         FloydFinder finder = new FloydFinder(graph);
@@ -50,6 +50,7 @@ public class VisualisationFloydFrame extends JFrame {
         setContentPane(box);
         pack();
         setVisible(true);
+        setLocationRelativeTo(null);
     }
 
     private JButton getNextButton(final FloydFinder finder) {

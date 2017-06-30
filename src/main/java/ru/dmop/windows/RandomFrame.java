@@ -16,7 +16,7 @@ public class RandomFrame extends JFrame {
     JSlider slider;
 
     public RandomFrame(boolean isFirst) throws HeadlessException {
-        super("Построить рандомное дерево");
+        super("Построить случайное дерево");
         Box mainBox = Box.createVerticalBox();
 
         mainBox.add(Box.createVerticalStrut(10));

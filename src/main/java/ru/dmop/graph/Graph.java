@@ -161,6 +161,7 @@ public class Graph extends mxGraph {
         }
     }
 
+
     public void addStyles() {
         StyleConstants.addStyles(this);
     }
